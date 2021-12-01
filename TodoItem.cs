@@ -5,7 +5,7 @@ public class TodoItem
     {
         private string Title {  get; set; }
         private DateTime Deadline {  get; set; }
-        private bool IsDone { get; set; }
+        public bool IsDone { get; private set; }
 
         public TodoItem(string title, DateTime deadline)
         {
@@ -37,15 +37,8 @@ public class TodoItem
         {
             // [x] 12-6 submit assignment
             // [ ] 28-6 submit assignment
-
-            if (this.IsDone)
-            {
-                return $"[x] {this.Deadline.Day}-{this.Deadline.Month} {this.Title}";
-            }
-            else
-            {
-                return $"[ ] {this.Deadline.Day}-{this.Deadline.Month} {this.Title}";
-            }
+            string dateAndTitle = $"{this.Deadline.Day}-{this.Deadline.Month} {this.Title}";
+            return ((this.IsDone ? "[x]" : "[ ]") + $" {dateAndTitle}");
         }
 
 
