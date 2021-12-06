@@ -4,6 +4,27 @@ using System.IO;
 namespace EisenhowerCore
 {
     public class TodoMatrix {
+
+        private Dictionary<string, TodoQuarter> TodoQuarters;
+
+        public TodoMatrix()
+        {
+            TodoQuarters = new Dictionary<string, TodoQuarter>;
+            List<TodoItem> todoItemts = new();
+            TodoQuarters.Add("IU", todoItemts);
+            TodoQuarters.Add("IN", todoItemts);
+            TodoQuarters.Add("NU", todoItemts);
+            TodoQuarters.Add("NN", todoItemts);
+        }
+
+        public Dictionary<string, TodoQuarter> GetQuarters() => TodoQuarters;
+
+
+        public TodoQuarter GetQuarter(String status)
+        {
+            return TodoQuarters[status];
+        }
+  
     
         public void AddItem(String title, DateTime deadline, bool isImportant)
         {
