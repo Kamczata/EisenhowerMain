@@ -3,8 +3,8 @@ using System;
 namespace EisenhowerCore {
 public class TodoItem
     {
-        private string Title {  get; set; }
-        private DateTime Deadline {  get; set; }
+        public string Title {  get; private set; }
+        public DateTime Deadline {  get; private set; }
         public bool IsDone { get; private set; }
 
         public TodoItem(string title, DateTime deadline)

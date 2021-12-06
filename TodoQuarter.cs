@@ -4,26 +4,19 @@ using System.Text;
 
 namespace EisenhowerCore { 
 
-    public class TodoQuarter 
+    public class TodoQuarter
     {
-        private List<TodoItem> ToDoItems { get; }
-
-        public TodoQuarter(List<TodoItem> listOfItems)
-        {
-            ToDoItems = listOfItems;
-        }
-
+        private List<TodoItem> ToDoItems { get; } = new List<TodoItem>();
+       
         public void AddItem(string title, DateTime deadline)
         {
             TodoItem newItem = new TodoItem(title,deadline);
             ToDoItems.Add(newItem);
         }
 
-        public void RemoveItem(int index)
-        {
-            ToDoItems.RemoveAt(index);
-        }
-
+        public void RemoveItem(int index) => ToDoItems.RemoveAt(index);
+    
+        // public void ArchiveItems() => ToDoItems.RemoveAll(item => item.IsDone);
         public void ArchiveItems()
         {
             foreach (TodoItem item in ToDoItems)
@@ -44,7 +37,7 @@ namespace EisenhowerCore {
             string allItems = $"";
             foreach (TodoItem item in ToDoItems)
             {
-                allItems += item.ToString() + "\n";
+                allItems += item.ToString() + $"{Environment.NewLine}";
             }
 
             return allItems;
