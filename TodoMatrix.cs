@@ -10,12 +10,13 @@ namespace EisenhowerCore
 
         public TodoMatrix()
         {
-            TodoQuarters = new Dictionary<string, TodoQuarter>;
-            List<TodoItem> todoItemts = new();
-            TodoQuarters.Add("IU", todoItemts);
-            TodoQuarters.Add("IN", todoItemts);
-            TodoQuarters.Add("NU", todoItemts);
-            TodoQuarters.Add("NN", todoItemts);
+            TodoQuarters = new Dictionary<string, TodoQuarter>();
+            List<TodoItem> todoItems = new List<TodoItem>();
+            TodoQuarter quarter = new TodoQuarter(todoItems);
+            TodoQuarters.Add("IU", quarter);
+            TodoQuarters.Add("IN", quarter);
+            TodoQuarters.Add("NU", quarter);
+            TodoQuarters.Add("NN", quarter);
         }
 
         public Dictionary<string, TodoQuarter> GetQuarters() => TodoQuarters;
@@ -32,19 +33,19 @@ namespace EisenhowerCore
             bool isUrgent = IsUrgent(deadline);
             if (isUrgent && isImportant)
             {
-                TodoQuarters["IU"].ToDoItems.AddItem(title, deadline);
+                TodoQuarters["IU"].AddItem(title, deadline);
             }
             else if(isUrgent && !isImportant)
             {
-                TodoQuarters["NU"].ToDoItems.AddItem(title, deadline);
+                TodoQuarters["NU"].AddItem(title, deadline);
             }
             else if(!isUrgent && isImportant)
             {
-                TodoQuarters["IN"].ToDoItems.AddItem(title, deadline);
+                TodoQuarters["IN"].AddItem(title, deadline);
             }
             else if(!isUrgent && !isImportant)
             {
-                TodoQuarters["NN"].ToDoItems.AddItem(title, deadline);
+                TodoQuarters["NN"].AddItem(title, deadline);
             }
         }
         
@@ -66,9 +67,9 @@ namespace EisenhowerCore
                 string[] item = line.Split('|');
                 string title = item[0];
                 string[] date = item[1].Split('-');
-                bool isImportant = new();
+                bool isImportant;
                 DateTime deadline = new DateTime(DateTime.Today.Year, Int32.Parse(date[1]), Int32.Parse(date[0]));
-                if (item[2]="")
+                if (item[2]=="")
                 {
                     isImportant = false;
                 }
@@ -84,40 +85,49 @@ namespace EisenhowerCore
   
         public void SaveItemsToFile(string fileName) //https://www.youtube.com/watch?v=vDpww7HsdnM
         {
-            var list = quarter.GetItems();
-            foreach (var item in list)
+            foreach (TodoQuarter quarter in TodoQuarters.Values)
             {
-                try
+                var list = quarter.GetItems();
+                foreach (var item in list)
                 {
-                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@fileName, true))
+                    try
                     {
-                        if (item.IsDone)
+                        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@fileName, true))
                         {
-                            file.WriteLine($"{item.Title}|{item.Deadline}|is_important"); //is important not implemented
-                        }
-                        else
-                        {
-                            file.WriteLine($"{item.Title}|{item.Deadline}| ");
+                            if (item.IsDone)
+                            {
+                                file.WriteLine(
+                                    $"{item.Title}|{item.Deadline}|is_important"); //is important not implemented
+                            }
+                            else
+                            {
+                                file.WriteLine($"{item.Title}|{item.Deadline}| ");
+                            }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        throw new ApplicationException("This program made an error: ", ex);
+                    }
+
                 }
-                catch(Exception ex)
-                {
-                    throw new ApplicationException("This program made an error: ", ex);
-                }
-                
             }
-            
+
         }
         
         public void ArchiveItems()
         {
-            foreach(TodoQuarter quarter in myDictionary.Value)
+            foreach(TodoQuarter quarter in TodoQuarters.Values)
             {
                 // List<TodoItem> list = quarter.GetItems();
                 quarter.GetItems().RemoveAll(item => item.IsDone);
             }
             
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
         }
     }
 

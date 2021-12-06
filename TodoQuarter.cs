@@ -6,7 +6,12 @@ namespace EisenhowerCore {
 
     public class TodoQuarter
     {
-        private List<TodoItem> ToDoItems { get; } = new List<TodoItem>();
+        private List<TodoItem> ToDoItems { get; }
+
+        public TodoQuarter(List<TodoItem> listOfItems)
+        {
+            ToDoItems = listOfItems;
+        }
        
         public void AddItem(string title, DateTime deadline)
         {
