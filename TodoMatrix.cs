@@ -8,7 +8,7 @@ namespace EisenhowerCore
 
         private Dictionary<string, TodoQuarter> TodoQuarters;
 
-        public TodoMatrix()
+        /*public TodoMatrix()
         {
             TodoQuarters = new Dictionary<string, TodoQuarter>();
             List<TodoItem> todoItems = new List<TodoItem>();
@@ -17,15 +17,7 @@ namespace EisenhowerCore
             TodoQuarters.Add("IN", quarter);
             TodoQuarters.Add("NU", quarter);
             TodoQuarters.Add("NN", quarter);
-        }
-
-        public Dictionary<string, TodoQuarter> GetQuarters() => TodoQuarters;
-
-
-        public TodoQuarter GetQuarter(String status)
-        {
-            return TodoQuarters[status];
-        }
+        }*/
   
     
         public void AddItem(String title, DateTime deadline, bool isImportant)
