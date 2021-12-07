@@ -6,7 +6,7 @@ namespace EisenhowerCore {
 
     public class TodoQuarter     
     {
-        // gdzieœ potrzebujecie informacji jaka to æwiartka
+        
 
         private List<TodoItem> ToDoItems { get; }  = new List<TodoItem>();
 

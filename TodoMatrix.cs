@@ -5,23 +5,24 @@ namespace EisenhowerCore
 {
     public class TodoMatrix {
 
-        private Dictionary<QuarterType, TodoQuarter> todoQuarters = new Dictionary<QuarterType, TodoQuarter>();
+        private Dictionary<QuarterType, TodoQuarter> TodoQuarters = new Dictionary<QuarterType, TodoQuarter>();
 
         public TodoMatrix()
         {
-            todoQuarters[QuarterType.URGENT] = new TodoQuarter();
-            todoQuarters[QuarterType.NOT_URGENT] = new TodoQuarter();
-            todoQuarters[QuarterType.IMPORTANT] = new TodoQuarter();
-            todoQuarters[QuarterType.NOT_IMPORTANT] = new TodoQuarter();    
-            //todoQuarters[5] = new TodoQuarter();    
+            TodoQuarters[QuarterType.IU] = new TodoQuarter();
+            TodoQuarters[QuarterType.IN] = new TodoQuarter();
+            TodoQuarters[QuarterType.NU] = new TodoQuarter();
+            TodoQuarters[QuarterType.NN] = new TodoQuarter();    
+            //TodoQuarters[5] = new TodoQuarter();    
         }
 
-        private TodoQuarter GetQuarter(QuarterType quarterType)
+        private Dictionary<QuarterType, TodoQuarter> GetQuarters() => TodoQuarters;
+
+        private TodoQuarter GetQuarter(QuarterType status)
         {
-            return todoQuarters[quarterType];
+            return TodoQuarters[status];
         }
-
-       
+              
 
 
     }
