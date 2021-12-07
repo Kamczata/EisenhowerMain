@@ -4,9 +4,29 @@ using System.IO;
 
 namespace EisenhowerCore
 {
+
+    
     public class TodoMatrix {
 
-        private Dictionary<string, TodoQuarter> TodoQuarters;
+        private Dictionary<QuarterType, TodoQuarter> TodoQuarters = new Dictionary<QuarterType, TodoQuarter>();
+
+        public TodoMatrix()
+        {
+            TodoQuarters[QuarterType.IU] = new TodoQuarter();
+            TodoQuarters[QuarterType.IN] = new TodoQuarter();
+            TodoQuarters[QuarterType.NU] = new TodoQuarter();
+            TodoQuarters[QuarterType.NN] = new TodoQuarter();
+            //TodoQuarters[5] = new TodoQuarter();    
+        }
+
+        private Dictionary<QuarterType, TodoQuarter> GetQuarters() => TodoQuarters;
+
+        private TodoQuarter GetQuarter(QuarterType status)
+        {
+            return TodoQuarters[status];
+        }
+
+        //private Dictionary<string, TodoQuarter> TodoQuarters;
 
         /*public TodoMatrix()
         {
@@ -18,26 +38,26 @@ namespace EisenhowerCore
             TodoQuarters.Add("NU", quarter);
             TodoQuarters.Add("NN", quarter);
         }*/
-  
-    
+
+
         public void AddItem(String title, DateTime deadline, bool isImportant)
         {
             bool isUrgent = IsUrgent(deadline);
             if (isUrgent && isImportant)
             {
-                TodoQuarters["IU"].AddItem(title, deadline);
+                TodoQuarters[QuarterType.IU].AddItem(title, deadline);
             }
             else if(isUrgent && !isImportant)
             {
-                TodoQuarters["NU"].AddItem(title, deadline);
+                TodoQuarters[QuarterType.NU].AddItem(title, deadline);
             }
             else if(!isUrgent && isImportant)
             {
-                TodoQuarters["IN"].AddItem(title, deadline);
+                TodoQuarters[QuarterType.IN].AddItem(title, deadline);
             }
             else if(!isUrgent && !isImportant)
             {
-                TodoQuarters["NN"].AddItem(title, deadline);
+                TodoQuarters[QuarterType.NN].AddItem(title, deadline);
             }
         }
         
@@ -124,26 +144,9 @@ namespace EisenhowerCore
     }
 
 
-        private Dictionary<QuarterType, TodoQuarter> TodoQuarters = new Dictionary<QuarterType, TodoQuarter>();
-
-        public TodoMatrix()
-        {
-            TodoQuarters[QuarterType.IU] = new TodoQuarter();
-            TodoQuarters[QuarterType.IN] = new TodoQuarter();
-            TodoQuarters[QuarterType.NU] = new TodoQuarter();
-            TodoQuarters[QuarterType.NN] = new TodoQuarter();    
-            //TodoQuarters[5] = new TodoQuarter();    
-        }
-
-        private Dictionary<QuarterType, TodoQuarter> GetQuarters() => TodoQuarters;
-
-        private TodoQuarter GetQuarter(QuarterType status)
-        {
-            return TodoQuarters[status];
-        }
+        
               
 
 
-    }
-
 }
+
