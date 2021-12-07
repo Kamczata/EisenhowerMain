@@ -4,7 +4,7 @@ namespace EisenhowerCore {
 public class TodoItem
     {
         private string Title {  get; set; }
-        private DateTime Deadline {  get; set; }
+        private DateTime Deadline {  get; set; } // zamiast GetDeadline, raczej get publiczne, a set private 
         public bool IsDone { get; private set; }
 
         public TodoItem(string title, DateTime deadline)

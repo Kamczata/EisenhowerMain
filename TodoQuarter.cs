@@ -4,13 +4,14 @@ using System.Text;
 
 namespace EisenhowerCore { 
 
-    public class TodoQuarter 
+    public class TodoQuarter     
     {
-        private List<TodoItem> ToDoItems { get; }
+        // gdzieœ potrzebujecie informacji jaka to æwiartka
 
-        public TodoQuarter(List<TodoItem> listOfItems)
+        private List<TodoItem> ToDoItems { get; }  = new List<TodoItem>();
+
+        public TodoQuarter()
         {
-            ToDoItems = listOfItems;
         }
 
         public void AddItem(string title, DateTime deadline)
