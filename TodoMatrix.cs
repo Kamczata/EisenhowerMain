@@ -97,19 +97,18 @@ namespace EisenhowerCore
   
         public void SaveItemsToFile(string fileName) //https://www.youtube.com/watch?v=vDpww7HsdnM
         {
-            foreach (TodoQuarter quarter in TodoQuarters.Values)
+            foreach (KeyValuePair<QuarterType, TodoQuarter> quarter in TodoQuarters)
             {
-                var list = quarter.GetItems();
+                var list = quarter.Value.GetItems();
                 foreach (var item in list)
                 {
                     try
                     {
                         using (System.IO.StreamWriter file = new System.IO.StreamWriter(@fileName, true))
                         {
-                            if (item.IsDone)
+                            if (item.IsDone && quarter.Key == QuarterType.IN || quarter.Key == QuarterType.IU)
                             {
-                                file.WriteLine(
-                                    $"{item.Title}|{item.Deadline}|is_important"); //is important not implemented
+                                file.WriteLine($"{item.Title}|{item.Deadline}|is_important");
                             }
                             else
                             {
