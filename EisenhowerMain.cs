@@ -5,8 +5,10 @@ namespace EisenhowerCore
     public class EisenhowerMain
     {  
         static public void Main(String[] args) 
-        { 
-            Console.WriteLine("Hello Codecool!"); 
+        {
+            EisenhowerMatrix eisenhowerMatrix = new EisenhowerMatrix();
+
+            eisenhowerMatrix.MatrixLogic();
         }
     }
 }

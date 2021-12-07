@@ -19,9 +19,9 @@ namespace EisenhowerCore
             //TodoQuarters[5] = new TodoQuarter();    
         }
 
-        private Dictionary<QuarterType, TodoQuarter> GetQuarters() => TodoQuarters;
+        public Dictionary<QuarterType, TodoQuarter> GetQuarters() => TodoQuarters;
 
-        private TodoQuarter GetQuarter(QuarterType status)
+        public TodoQuarter GetQuarter(QuarterType status)
         {
             return TodoQuarters[status];
         }
