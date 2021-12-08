@@ -21,6 +21,7 @@ namespace EisenhowerCore
                 display.PrintMainMenu();
                 string userChoice = input.UserInput();
                 int option = Int32.Parse(userChoice);
+                string whichMenu = input.WhichMenu(option);
                 if (option == 6)
                 {
                     System.Environment.Exit(1);
@@ -31,8 +32,8 @@ namespace EisenhowerCore
                     display.PrintSpecificMenu(option);
                     string userInput = input.UserInput();
                     int userAction = Int32.Parse(userInput);
-                    // while(true)??
-                    CarryAction(userAction);
+                    // while(true
+                    CarryAction(userAction, whichMenu);
                 }
             }
             
@@ -72,11 +73,17 @@ namespace EisenhowerCore
 
             
         }
-        public void CarryAction(int option)
+
+       /* public int ItemPicker()
+        {
+
+        }*/
+
+        public void CarryAction(int action, string whichMenu)
         {
             // All options should contain proper input and display needed to carry full operation
             //1 - add item
-            if (option == 1)
+            if (action == 1)
             {
                 display.PrintMessage(display.askForTitle);
                 string title = input.UserInput();
@@ -91,12 +98,25 @@ namespace EisenhowerCore
 
                 matrix.AddItem(title, convDeadline, convIsImportant);
             }
-            //2 - remove item
-            //3 - mark item as done
-            //4 - unmark item
-            //5 - archive done items
-            //6 - save to csv
-            //7 - load from csv
+            else
+            {
+                if(whichMenu == "matrix")
+                {
+                    //2 - archive done items
+                    //3 - save to csv
+                    //4 - load from csv
+                }
+                else if (whichMenu == "quarter")
+                {
+                    // DO AKCJI 2-4 PRZYDALABY SIE POMOCNICZA FUNKCJA ItemPicker 
+                    //2 - remove item
+                    //3 - mark item as done
+                    //4 - unmark item
+                }
+            }
+            
+            
+            
         }
 
     }

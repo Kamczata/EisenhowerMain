@@ -23,9 +23,11 @@ SHOW:
 4. Mark item as not done 
 ";
 
-        private string MatrixMenu = @"5. Archive done items
-6. Save items to csv
-7. Load items from csv";
+        private string MatrixMenu = @"
+1. Add item
+2. Archive done items
+3. Save items to csv
+4. Load items from csv";
 
         public readonly string askForTitle = "Write new item title";
         public readonly string askForDeadline = "Provide the deadline YYYY-MM-DD";
@@ -53,7 +55,7 @@ SHOW:
             }
             else
             {
-                Console.WriteLine(QarterMenu + MatrixMenu);
+                Console.WriteLine(MatrixMenu);
             }
         } 
 
