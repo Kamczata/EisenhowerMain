@@ -19,23 +19,28 @@ namespace EisenhowerCore
             {
                 display.ClearScreen();
                 display.PrintMainMenu();
-                string option = input.ChooseOption();
-                if (option == "6")
+                string userChoice = input.UserInput();
+                int option = Int32.Parse(userChoice);
+                if (option == 6)
                 {
                     System.Environment.Exit(1);
                 }
                 else
                 {
                     ShowItems(option);
-                    input.PressAnyKey();
+                    display.PrintSpecificMenu(option);
+                    string userInput = input.UserInput();
+                    int userAction = Int32.Parse(userInput);
+                    // while(true)??
+                    CarryAction(option);
                 }
             }
             
         }
 
-        public void ShowItems(string userChoice)
+        public void ShowItems(int option)
         {
-            int option = Int32.Parse(userChoice);
+            
             QuarterType quarterType;
             TodoQuarter quarter;
             if ( option < 5)
@@ -44,31 +49,54 @@ namespace EisenhowerCore
                 if (option == 1)
                 {
                     quarterType = QuarterType.IU;
-                    quarter = matrix.GetQuarter(quarterType);
                 }
                 else if (option == 2)
                 {
                     quarterType = QuarterType.NU;
-                    quarter = matrix.GetQuarter(quarterType);
                 }
                 else if (option == 3)
                 {
                     quarterType = QuarterType.IN;
-                    quarter = matrix.GetQuarter(quarterType);
                 }
                 else
                 {
-                    quarterType = QuarterType.NN;
-                    quarter = matrix.GetQuarter(quarterType);
+                    quarterType = QuarterType.NN;   
                 }
-
+                quarter = matrix.GetQuarter(quarterType);
                 display.DisplayQuarter(quarter, quarterType);
             }
             else
             {
-                Console.WriteLine("THERE WILL BE MATRIX");
+                display.DisplayMatrix(this.matrix);
             }
 
+            
+        }
+        public void CarryAction(int option)
+        {
+            // All options should contain proper input and display needed to carry full operation
+            //1 - add item
+            if (option == 1)
+            {
+                display.PrintMessage(display.askForTitle);
+                string title = input.UserInput();
+
+                display.PrintMessage(display.askForDeadline);
+                string deadline = input.UserInput();
+                DateTime convDeadline = input.ConvertDeadline(deadline);
+
+                display.PrintMessage(display.isItImportant);
+                string isImportant = input.UserInput();
+                bool convIsImportant = input.ConvertImportance(isImportant);
+
+                matrix.AddItem(title, convDeadline, convIsImportant);
+            }
+            //2 - remove item
+            //3 - mark item as done
+            //4 - unmark item
+            //5 - archive done items
+            //6 - save to csv
+            //7 - load from csv
         }
 
     }

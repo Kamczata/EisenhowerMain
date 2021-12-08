@@ -23,11 +23,13 @@ SHOW:
 4. Mark item as not done 
 ";
 
-        private string MatrixMenu = @"
-5. Archive done items
+        private string MatrixMenu = @"5. Archive done items
 6. Save items to csv
 7. Load items from csv";
 
+        public readonly string askForTitle = "Write new item title";
+        public readonly string askForDeadline = "Provide the deadline YYYY-MM-DD";
+        public readonly string isItImportant = "Is it important? y - for yes; n - for no";
 
         private Dictionary<QuarterType, string> headers = new Dictionary<QuarterType, string>() {
             { QuarterType.IU, "Urgent & Important" },
@@ -37,10 +39,24 @@ SHOW:
         };
 
         public void ClearScreen() => Console.Clear();
-        
 
-        public void PrintMainMenu() => Console.WriteLine(this.MainMenu);
+        public void PrintMessage(string message) => Console.WriteLine(message);
         
+        public void PrintMainMenu() => Console.WriteLine(this.MainMenu);
+
+        public void PrintSpecificMenu(int option)
+        {
+            // 1-4 show quarter; 5 is full matrix
+            if (option <= 4)
+            {
+                Console.WriteLine(QarterMenu);
+            }
+            else
+            {
+                Console.WriteLine(QarterMenu + MatrixMenu);
+            }
+        } 
+
 
         public void DisplayQuarter(TodoQuarter quarter, QuarterType quarterType)
         {
@@ -48,15 +64,12 @@ SHOW:
             ClearScreen();
             Console.WriteLine(header);
             Console.WriteLine(quarter.ToString());
-            Console.WriteLine(QarterMenu);
         }
 
         public void DisplayMatrix(TodoMatrix matrix)
         {
             ClearScreen();
             Console.WriteLine(matrix);
-            Console.WriteLine(QarterMenu);
-            Console.WriteLine(MatrixMenu);
         }
     }
 }
