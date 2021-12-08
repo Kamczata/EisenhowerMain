@@ -6,6 +6,6 @@ namespace EisenhowerCore
 { 
     public enum QuarterType
     {
-        IU, IN, NU, NN
+        IU, IN, NU, NN, Matrix
     }
 }

@@ -26,19 +26,6 @@ namespace EisenhowerCore
             return TodoQuarters[status];
         }
 
-        //private Dictionary<string, TodoQuarter> TodoQuarters;
-
-        /*public TodoMatrix()
-        {
-            TodoQuarters = new Dictionary<string, TodoQuarter>();
-            List<TodoItem> todoItems = new List<TodoItem>();
-            TodoQuarter quarter = new TodoQuarter(todoItems);
-            TodoQuarters.Add("IU", quarter);
-            TodoQuarters.Add("IN", quarter);
-            TodoQuarters.Add("NU", quarter);
-            TodoQuarters.Add("NN", quarter);
-        }*/
-
 
         public void AddItem(String title, DateTime deadline, bool isImportant)
         {

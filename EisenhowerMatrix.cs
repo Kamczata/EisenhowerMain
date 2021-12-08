@@ -22,64 +22,76 @@ namespace EisenhowerCore
                 string userChoice = input.UserInput();
                 int option = Int32.Parse(userChoice);
                 string whichMenu = input.WhichMenu(option);
+                QuarterType quarterType = QuarterType.Matrix;
                 if (option == 6)
                 {
                     System.Environment.Exit(1);
                 }
                 else
                 {
-                    ShowItems(option);
-                    display.PrintSpecificMenu(option);
+                    if (option < 5)
+                    {
+                        quarterType = ShowItems(option);
+                    }
+                    else
+                    {
+                        display.DisplayMatrix(this.matrix);
+                    }
+                    
+                    display.PrintSpecificMenu(whichMenu);
                     string userInput = input.UserInput();
                     int userAction = Int32.Parse(userInput);
-                    // while(true
-                    CarryAction(userAction, whichMenu);
+                    
+                    CarryAction(userAction, whichMenu, quarterType);
+                    
+                    
                 }
             }
             
         }
 
-        public void ShowItems(int option)
+        public QuarterType ShowItems(int option)
         {
             
             QuarterType quarterType;
             TodoQuarter quarter;
-            if ( option < 5)
+              
+            if (option == 1)
             {
-                
-                if (option == 1)
-                {
-                    quarterType = QuarterType.IU;
-                }
-                else if (option == 2)
-                {
-                    quarterType = QuarterType.NU;
-                }
-                else if (option == 3)
-                {
-                    quarterType = QuarterType.IN;
-                }
-                else
-                {
-                    quarterType = QuarterType.NN;   
-                }
-                quarter = matrix.GetQuarter(quarterType);
-                display.DisplayQuarter(quarter, quarterType);
+                quarterType = QuarterType.IU;
+            }
+            else if (option == 2)
+            {
+                quarterType = QuarterType.NU;
+            }
+            else if (option == 3)
+            {
+                quarterType = QuarterType.IN;
             }
             else
             {
-                display.DisplayMatrix(this.matrix);
+                quarterType = QuarterType.NN;   
             }
-
-            
+            quarter = matrix.GetQuarter(quarterType);
+            display.DisplayQuarter(quarter, quarterType);
+            return quarterType;
+           
         }
 
-       /* public int ItemPicker()
+        public int ItemPicker(QuarterType quarterType)
         {
+            int howManyItems = matrix.GetQuarter(quarterType).HowManyItems();
+            int itemIndex = 0;
+            if (howManyItems > 1)
+            {
+                display.PickItem(howManyItems);
+                string userInput = input.UserInput();
+                itemIndex = Int32.Parse(userInput) - 1;
+            }
+            return itemIndex;
+        }
 
-        }*/
-
-        public void CarryAction(int action, string whichMenu)
+        public bool CarryAction(int action, string whichMenu, QuarterType quarterType)
         {
             // All options should contain proper input and display needed to carry full operation
             //1 - add item
@@ -98,7 +110,7 @@ namespace EisenhowerCore
 
                 matrix.AddItem(title, convDeadline, convIsImportant);
             }
-            else
+            else if (action > 1 && action < 5)
             {
                 if(whichMenu == "matrix")
                 {
@@ -109,11 +121,18 @@ namespace EisenhowerCore
                 else if (whichMenu == "quarter")
                 {
                     // DO AKCJI 2-4 PRZYDALABY SIE POMOCNICZA FUNKCJA ItemPicker 
+                    int indexOfPickedItem = ItemPicker(quarterType);
+                    Console.WriteLine(indexOfPickedItem);
                     //2 - remove item
                     //3 - mark item as done
                     //4 - unmark item
                 }
             }
+            else
+            {
+                return false;
+            }
+            return false;
             
             
             
