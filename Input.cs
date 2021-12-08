@@ -29,15 +29,6 @@ namespace EisenhowerCore
             }
             return false;
         }
-
-        public string WhichMenu(int option)
-        {
-            if (option <= 4)
-            {
-                return "quarter";
-            }
-            return "matrix";
-        }
         
     }
 }

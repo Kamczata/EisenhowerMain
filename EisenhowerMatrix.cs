@@ -21,7 +21,6 @@ namespace EisenhowerCore
                 display.PrintMainMenu();
                 string userChoice = input.UserInput();
                 int option = Int32.Parse(userChoice);
-                string whichMenu = input.WhichMenu(option);
                 QuarterType quarterType = QuarterType.Matrix;
                 if (option == 6)
                 {
@@ -38,11 +37,11 @@ namespace EisenhowerCore
                         display.DisplayMatrix(this.matrix);
                     }
                     
-                    display.PrintSpecificMenu(whichMenu);
+                    display.PrintSpecificMenu(quarterType);
                     string userInput = input.UserInput();
                     int userAction = Int32.Parse(userInput);
                     
-                    CarryAction(userAction, whichMenu, quarterType);
+                    CarryAction(userAction, quarterType);
                     
                     
                 }
@@ -91,7 +90,7 @@ namespace EisenhowerCore
             return itemIndex;
         }
 
-        public bool CarryAction(int action, string whichMenu, QuarterType quarterType)
+        public void CarryAction(int action, QuarterType quarterType)
         {
             // All options should contain proper input and display needed to carry full operation
             //1 - add item
@@ -112,17 +111,16 @@ namespace EisenhowerCore
             }
             else if (action > 1 && action < 5)
             {
-                if(whichMenu == "matrix")
+                if(quarterType == QuarterType.Matrix)
                 {
                     //2 - archive done items
                     //3 - save to csv
                     //4 - load from csv
                 }
-                else if (whichMenu == "quarter")
+                else 
                 {
                     // DO AKCJI 2-4 PRZYDALABY SIE POMOCNICZA FUNKCJA ItemPicker 
                     int indexOfPickedItem = ItemPicker(quarterType);
-                    Console.WriteLine(indexOfPickedItem);
                     //2 - remove item
                     //3 - mark item as done
                     //4 - unmark item
@@ -130,9 +128,9 @@ namespace EisenhowerCore
             }
             else
             {
-                return false;
+                // somehow back to main menu
             }
-            return false;
+            
             
             
             

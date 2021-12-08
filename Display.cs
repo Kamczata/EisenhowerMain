@@ -49,16 +49,16 @@ SHOW:
         
         public void PrintMainMenu() => Console.WriteLine(this.MainMenu);
 
-        public void PrintSpecificMenu(string whichMenu)
+        public void PrintSpecificMenu(QuarterType quarterType)
         {
             // 1-4 show quarter; 5 is full matrix
-            if (whichMenu == "quarter")
+            if (quarterType == QuarterType.Matrix)
             {
-                Console.WriteLine(QarterMenu);
+                Console.WriteLine(MatrixMenu);
             }
             else
             {
-                Console.WriteLine(MatrixMenu);
+                Console.WriteLine(QarterMenu);
             }
         } 
 
