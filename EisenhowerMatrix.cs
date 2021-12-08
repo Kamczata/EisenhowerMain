@@ -32,7 +32,7 @@ namespace EisenhowerCore
                     string userInput = input.UserInput();
                     int userAction = Int32.Parse(userInput);
                     // while(true)??
-                    CarryAction(option);
+                    CarryAction(userAction);
                 }
             }
             
