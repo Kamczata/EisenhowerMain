@@ -68,7 +68,7 @@ namespace EisenhowerCore
                 string[] date = item[1].Split('-');
                 bool isImportant;
                 DateTime deadline = new DateTime(DateTime.Today.Year, Int32.Parse(date[1]), Int32.Parse(date[0]));
-                if (item[2]=="")
+                if (item[2]==" ")
                 {
                     isImportant = false;
                 }

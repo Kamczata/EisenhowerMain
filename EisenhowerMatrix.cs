@@ -36,14 +36,12 @@ namespace EisenhowerCore
                     {
                         display.DisplayMatrix(this.matrix);
                     }
-                    
+
                     display.PrintSpecificMenu(quarterType);
                     string userInput = input.UserInput();
                     int userAction = Int32.Parse(userInput);
-                    
                     CarryAction(userAction, quarterType);
-                    
-                    
+                        
                 }
             }
             
@@ -114,25 +112,48 @@ namespace EisenhowerCore
                 if(quarterType == QuarterType.Matrix)
                 {
                     //2 - archive done items
+                    if (action == 2)
+                    {
+
+                    }
+
                     //3 - save to csv
+                    else if (action == 3)
+                    {
+
+                    }
                     //4 - load from csv
+                    else if (action == 4)
+                    {
+                        display.PrintMessage(display.provideFilepath);
+                        string filepath = input.UserInput();
+                        matrix.AddItemsFromFile(filepath);
+                    }
+                    
                 }
                 else 
                 {
                     // DO AKCJI 2-4 PRZYDALABY SIE POMOCNICZA FUNKCJA ItemPicker 
                     int indexOfPickedItem = ItemPicker(quarterType);
-                    //2 - remove item
-                    //3 - mark item as done
-                    //4 - unmark item
+                    if (action == 2)
+                    {
+                        matrix.GetQuarter(quarterType).RemoveItem(indexOfPickedItem);
+                    }
+                    else if (action == 3)
+                    {
+                        //3 - mark item as done
+                    }
+                    else if (action == 4)
+                    {
+                        //4 - unmark item
+                    }
+
                 }
             }
-            else
+            else if (action == 5)
             {
-                // somehow back to main menu
+                input.PressAnyKey();
             }
-            
-            
-            
             
         }
 

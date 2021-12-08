@@ -7,7 +7,7 @@ namespace EisenhowerCore
     class Display
     {
         private string MainMenu = @" 
-SHOW:
+MAIN MENU:
 1. urgent & important items
 2. urgent & not important items
 3. not urgent & important items
@@ -17,6 +17,7 @@ SHOW:
 ";
 
         private string QarterMenu = @"
+------------------------
 1. Add item
 2. Remove item
 3. Mark item as done
@@ -25,6 +26,7 @@ SHOW:
 ";
 
         private string MatrixMenu = @"
+----------------------
 1. Add item
 2. Archive done items
 3. Save items to csv
@@ -34,6 +36,7 @@ SHOW:
         public readonly string askForTitle = "Write new item title";
         public readonly string askForDeadline = "Provide the deadline YYYY-MM-DD";
         public readonly string isItImportant = "Is it important? y - for yes; n - for no";
+        public readonly string provideFilepath = "Provide filepath";
         
 
         private Dictionary<QuarterType, string> headers = new Dictionary<QuarterType, string>() {
