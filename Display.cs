@@ -37,6 +37,13 @@ MAIN MENU:
         public readonly string askForDeadline = "Provide the deadline YYYY-MM-DD";
         public readonly string isItImportant = "Is it important? y - for yes; n - for no";
         public readonly string provideFilepath = "Provide filepath";
+        public readonly string askForFilename = "Provide filename and type csv or txt, e.g. Donetasks.csv";
+        public readonly string askForConfirmation = "Are you sure you want to archive all 'Done' tasks? y - for yes; n - for no";
+        public readonly string itemAlreadyDone = "This item is already done. Pick other item.";
+        public readonly string itemAlreadyNotDone = "This item is not done. Pick other item.";
+
+        public readonly string confirmationFilesSaved =
+            "If you had any 'Done' tasks, your file should be in your project/bin/debug. Press any key to continue.";
         
 
         private Dictionary<QuarterType, string> headers = new Dictionary<QuarterType, string>() {

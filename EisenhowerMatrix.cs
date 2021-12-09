@@ -1,6 +1,7 @@
 ﻿using EisenhowerCore;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace EisenhowerCore
@@ -114,13 +115,26 @@ namespace EisenhowerCore
                     //2 - archive done items
                     if (action == 2)
                     {
-
+                        display.PrintMessage(display.askForConfirmation);
+                        string userChoice = input.UserInput();
+                        if (userChoice == "y")
+                        {   
+                            matrix.ArchiveItems();
+                        }
+                        else if (userChoice == "n")
+                        {
+                            //Puste wraca do głownego menu :p
+                        }
                     }
 
                     //3 - save to csv
                     else if (action == 3)
                     {
-
+                        display.PrintMessage(display.askForFilename);
+                        string filename = input.UserInput();
+                        matrix.SaveItemsToFile(filename);
+                        display.PrintMessage(display.confirmationFilesSaved);
+                        input.PressAnyKey();
                     }
                     //4 - load from csv
                     else if (action == 4)
@@ -141,18 +155,23 @@ namespace EisenhowerCore
                     }
                     else if (action == 3)
                     {
-                        //3 - mark item as done
+                        while(matrix.GetQuarter(quarterType).GetItem(indexOfPickedItem).IsDone)
+                        {
+                            display.PrintMessage(display.itemAlreadyDone);
+                            indexOfPickedItem = ItemPicker(quarterType);
+                        }
+                        matrix.GetQuarter(quarterType).GetItem(indexOfPickedItem).Mark(); //TO ZAZNACZA ALE CZY W DOBRYM MIEJSCU?
                     }
                     else if (action == 4)
                     {
-                        //4 - unmark item
+                        matrix.GetQuarter(quarterType).GetItem(indexOfPickedItem).UnMark();
                     }
 
                 }
             }
             else if (action == 5)
             {
-                input.PressAnyKey();
+                //Najlepsze rozwiązanie to zostawić to puste i wtedy samo wróci do głównego menu :p
             }
             
         }
