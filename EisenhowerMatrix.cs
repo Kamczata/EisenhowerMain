@@ -89,10 +89,37 @@ namespace EisenhowerCore
             return itemIndex;
         }
 
+        private bool HasDoneOrUndoneItems(string doneOrUndone, QuarterType quarterType)
+        {
+            bool hasDoneOrUndoneItems = false;
+            foreach (TodoItem item in matrix.GetQuarter(quarterType).GetItems())
+            {
+                
+                if (doneOrUndone == "done")
+                {
+                    if (item.IsDone)
+                    {
+                        return true;
+                    }
+                }
+                else if (doneOrUndone == "undone")
+                {
+                    if(!item.IsDone)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return hasDoneOrUndoneItems;
+        }
+
         public void CarryAction(int action, QuarterType quarterType)
         {
             // All options should contain proper input and display needed to carry full operation
             //1 - add item
+            bool haveDoneItems = HasDoneOrUndoneItems("done", quarterType);
+            bool haveUndoneItems = HasDoneOrUndoneItems("undone", quarterType);
+
             if (action == 1)
             {
                 display.PrintMessage(display.askForTitle);
@@ -148,23 +175,48 @@ namespace EisenhowerCore
                 else 
                 {
                     // DO AKCJI 2-4 PRZYDALABY SIE POMOCNICZA FUNKCJA ItemPicker 
-                    int indexOfPickedItem = ItemPicker(quarterType);
+                    
                     if (action == 2)
                     {
+                        int indexOfPickedItem = ItemPicker(quarterType);
                         matrix.GetQuarter(quarterType).RemoveItem(indexOfPickedItem);
                     }
                     else if (action == 3)
                     {
-                        while(matrix.GetQuarter(quarterType).GetItem(indexOfPickedItem).IsDone)
+                        if (haveUndoneItems) 
                         {
-                            display.PrintMessage(display.itemAlreadyDone);
-                            indexOfPickedItem = ItemPicker(quarterType);
+                            int indexOfPickedItem = ItemPicker(quarterType);
+                            while (matrix.GetQuarter(quarterType).GetItem(indexOfPickedItem).IsDone && indexOfPickedItem>0)
+                            {
+                                display.PrintMessage(display.itemAlreadyDone);
+                                indexOfPickedItem = ItemPicker(quarterType);
+                            }
+                            matrix.GetQuarter(quarterType).GetItem(indexOfPickedItem).Mark(); //TO ZAZNACZA ALE CZY W DOBRYM MIEJSCU?
                         }
-                        matrix.GetQuarter(quarterType).GetItem(indexOfPickedItem).Mark(); //TO ZAZNACZA ALE CZY W DOBRYM MIEJSCU?
+                        else
+                        {
+                            display.PrintMessage(display.noItemsToPick);
+                            input.PressAnyKey();
+                        }
+                        
                     }
                     else if (action == 4)
                     {
-                        matrix.GetQuarter(quarterType).GetItem(indexOfPickedItem).UnMark();
+                        if (haveDoneItems)
+                        {
+                            int indexOfPickedItem = ItemPicker(quarterType);
+                            while (!matrix.GetQuarter(quarterType).GetItem(indexOfPickedItem).IsDone && indexOfPickedItem > 0)
+                            {
+                                display.PrintMessage(display.itemAlreadyNotDone);
+                                indexOfPickedItem = ItemPicker(quarterType);
+                            }
+                            matrix.GetQuarter(quarterType).GetItem(indexOfPickedItem).UnMark();
+                        }
+                        else
+                        {
+                            display.PrintMessage(display.noItemsToPick);
+                            input.PressAnyKey();
+                        }
                     }
 
                 }

@@ -11,6 +11,7 @@ public class TodoItem
         {
             Title = title;
             Deadline = deadline;
+            IsDone = false;
         }
 
         public string GetTitle()
