@@ -38,7 +38,7 @@ MAIN MENU:
         public readonly string isItImportant = "Is it important? y - for yes; n - for no";
         public readonly string provideFilepath = "Provide filepath";
         public readonly string askForFilename = "Provide filename and type csv or txt, e.g. Donetasks.csv";
-        public readonly string askForConfirmation = "Are you sure you want to archive all 'Done' tasks? y - for yes; n - for no";
+        public readonly string askForConfirmation = "Are you sure you want to archive all 'Done' tasks? y - for yes; any other key - for no";
         public readonly string itemAlreadyDone = "This item is already done. Pick other item.";
         public readonly string itemAlreadyNotDone = "This item is not done. Pick other item.";
         public readonly string noItemsToPick = "No items to pick!";
@@ -93,6 +93,11 @@ MAIN MENU:
             string message = $"Pick item from 1 to {howManyItems}";
             PrintMessage(message);
                   
+        }
+
+        public void DisplayInfoAboutWrongInput()
+        {
+            Console.WriteLine("Wrong input, try again.");
         }
     }
 }

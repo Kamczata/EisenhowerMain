@@ -20,7 +20,7 @@ namespace EisenhowerCore
             {
                 display.ClearScreen();
                 display.PrintMainMenu();
-                string userChoice = input.UserInput();
+                string userChoice = input.UserInputMainMenu();
                 int option = Int32.Parse(userChoice);
                 QuarterType quarterType = QuarterType.Matrix;
                 if (option == 6)
@@ -39,7 +39,7 @@ namespace EisenhowerCore
                     }
 
                     display.PrintSpecificMenu(quarterType);
-                    string userInput = input.UserInput();
+                    string userInput = input.UserInputInsideQuarter();
                     int userAction = Int32.Parse(userInput);
                     CarryAction(userAction, quarterType);
                         
@@ -83,7 +83,7 @@ namespace EisenhowerCore
             if (howManyItems > 1)
             {
                 display.PickItem(howManyItems);
-                string userInput = input.UserInput();
+                string userInput = input.UserInputInQuarterItemChoice(howManyItems);
                 itemIndex = Int32.Parse(userInput) - 1;
             }
             return itemIndex;
@@ -94,7 +94,6 @@ namespace EisenhowerCore
             bool hasDoneOrUndoneItems = false;
             foreach (TodoItem item in matrix.GetQuarter(quarterType).GetItems())
             {
-                
                 if (doneOrUndone == "done")
                 {
                     if (item.IsDone)
@@ -123,17 +122,17 @@ namespace EisenhowerCore
             if (action == 1)
             {
                 display.PrintMessage(display.askForTitle);
-                string title = input.UserInput();
+                string title = input.UserInputNewItemTitle();
 
                 display.PrintMessage(display.askForDeadline);
-                string deadline = input.UserInput();
+                string deadline = input.UserInputNewItemDate();
                 DateTime convDeadline = input.ConvertDeadline(deadline);
 
                 display.PrintMessage(display.isItImportant);
-                string isImportant = input.UserInput();
-                bool convIsImportant = input.ConvertImportance(isImportant);
+                string isImportant = input.UserInputIsItemImportant();
+                bool IsImportantOrNot = input.CheckImportance(isImportant);
 
-                matrix.AddItem(title, convDeadline, convIsImportant);
+                matrix.AddItem(title, convDeadline, IsImportantOrNot);
             }
             else if (action > 1 && action < 5)
             {
@@ -144,13 +143,13 @@ namespace EisenhowerCore
                     {
                         display.PrintMessage(display.askForConfirmation);
                         string userChoice = input.UserInput();
-                        if (userChoice == "y")
+                        if (userChoice.ToLower() == "y" || userChoice.ToLower() == "yes")
                         {   
                             matrix.ArchiveItems();
                         }
-                        else if (userChoice == "n")
+                        else
                         {
-                            //Puste wraca do głownego menu :p
+                            //Ok, not the best option to leave this field empty, but it works. :p
                         }
                     }
 
@@ -158,7 +157,7 @@ namespace EisenhowerCore
                     else if (action == 3)
                     {
                         display.PrintMessage(display.askForFilename);
-                        string filename = input.UserInput();
+                        string filename = input.UserInputSaveToFile();
                         matrix.SaveItemsToFile(filename);
                         display.PrintMessage(display.confirmationFilesSaved);
                         input.PressAnyKey();
@@ -167,15 +166,13 @@ namespace EisenhowerCore
                     else if (action == 4)
                     {
                         display.PrintMessage(display.provideFilepath);
-                        string filepath = input.UserInput();
+                        string filepath = input.UserInput(); //How to check if user input is the same as filepath?
                         matrix.AddItemsFromFile(filepath);
                     }
                     
                 }
                 else 
                 {
-                    // DO AKCJI 2-4 PRZYDALABY SIE POMOCNICZA FUNKCJA ItemPicker 
-                    
                     if (action == 2)
                     {
                         int indexOfPickedItem = ItemPicker(quarterType);
@@ -223,7 +220,7 @@ namespace EisenhowerCore
             }
             else if (action == 5)
             {
-                //Najlepsze rozwiązanie to zostawić to puste i wtedy samo wróci do głównego menu :p
+                //Ok, not the best option to leave this field empty, but it works. :p
             }
             
         }

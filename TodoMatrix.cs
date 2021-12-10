@@ -125,7 +125,7 @@ namespace EisenhowerCore
 
         public override string ToString()
         {
-            return base.ToString();
+            return "-----------";
         }
     }
 
