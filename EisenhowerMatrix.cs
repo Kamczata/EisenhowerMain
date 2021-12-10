@@ -1,6 +1,7 @@
 ﻿using EisenhowerCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -112,12 +113,15 @@ namespace EisenhowerCore
             return hasDoneOrUndoneItems;
         }
 
+        private bool HaveItemsToRemove(QuarterType quarterType) => matrix.GetQuarter(quarterType).GetItems().Any();
+
         public void CarryAction(int action, QuarterType quarterType)
         {
             // All options should contain proper input and display needed to carry full operation
             //1 - add item
             bool haveDoneItems = HasDoneOrUndoneItems("done", quarterType);
             bool haveUndoneItems = HasDoneOrUndoneItems("undone", quarterType);
+            bool haveItemsToRemove = HaveItemsToRemove(quarterType);
 
             if (action == 1)
             {
@@ -175,8 +179,16 @@ namespace EisenhowerCore
                 {
                     if (action == 2)
                     {
-                        int indexOfPickedItem = ItemPicker(quarterType);
-                        matrix.GetQuarter(quarterType).RemoveItem(indexOfPickedItem);
+                        if (haveItemsToRemove)
+                        {
+                            int indexOfPickedItem = ItemPicker(quarterType);
+                            matrix.GetQuarter(quarterType).RemoveItem(indexOfPickedItem);
+                        }
+                        else
+                        {
+                            display.PrintMessage(display.noItemsToRemove);
+                            input.PressAnyKey();
+                        }
                     }
                     else if (action == 3)
                     {

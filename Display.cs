@@ -42,6 +42,7 @@ MAIN MENU:
         public readonly string itemAlreadyDone = "This item is already done. Pick other item.";
         public readonly string itemAlreadyNotDone = "This item is not done. Pick other item.";
         public readonly string noItemsToPick = "No items to pick!";
+        public readonly string noItemsToRemove = "No items to remove!";
 
         public readonly string confirmationFilesSaved =
             "If you had any 'Done' tasks, your file should be in your project/bin/debug. Press any key to continue.";
