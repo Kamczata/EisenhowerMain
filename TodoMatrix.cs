@@ -147,9 +147,9 @@ namespace EisenhowerCore
             halfMatrix += multiplySign(dash, quarterWidth * 2 + 1) + "\n";
             for (int i = 0; i < lines; i++)
             {
-                if (Amount1 == 0 || Amount1 - 1 < i)
+                if (Amount1 == 0)
                 {
-                    if (Amount2 == 0 || Amount2 - 1 < i)
+                    if (Amount2 == 0)
                     {
                         halfMatrix += multiplySign(space, quarterWidth) + wall + multiplySign(space, quarterWidth) + "\n";
                     }
@@ -161,7 +161,7 @@ namespace EisenhowerCore
                 }
                 else
                 {
-                    if (Amount2 == 0 || Amount2 - 1 < i)
+                    if (Amount2 == 0)
                     {
                         int refill = quarterWidth - TodoQuarters[quaterType1].GetItem(i).ToString().Length;
                         halfMatrix += TodoQuarters[quaterType1].GetItem(i) + multiplySign(space, refill) + wall + multiplySign(space, quarterWidth) + "\n";
