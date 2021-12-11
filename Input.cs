@@ -10,52 +10,27 @@ namespace EisenhowerCore
     {
         public string numberOfItemsInQuarter(string number) => number; 
         private Display display = new Display();
-        private readonly List<string> userInputMainMenu = new List<string>() { "1", "2", "3", "4", "5", "6" };
-        private readonly List<string> choiceInsideQuarter = new List<string>() { "1", "2", "3", "4", "5" };
-        private readonly List<string> isItemImportant = new List<string>() { "y", "n", "yes", "no" };
-        private readonly List<string> QuarterTypes = new List<string>() { "IU", "NU", "IN", "NN" };
+        public readonly List<string> userInputMainMenu = new List<string>() { "1", "2", "3", "4", "5", "6" };
+        public readonly List<string> choiceInsideQuarter = new List<string>() { "1", "2", "3", "4", "5" };
+        public readonly List<string> isItemImportant = new List<string>() { "y", "n", "yes", "no" };
+        public readonly List<string> QuarterTypes = new List<string>() { "IU", "NU", "IN", "NN" };
 
         bool checkIfInputIsAlphaOrNumbers(string input) => Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
-        // public string UserInputMainMenu(string inputValidationFromList)
-        // {
-        //     while (true)
-        //     {
-        //         string input = Console.ReadLine();
-        //         if (inputValidationFromList.Contains(input.ToLower()))
-        //         {
-        //             return input;
-        //         }
-        //         display.DisplayInfoAboutWrongInput();
-        //                 
-        //     }
-        // }
+        
+        public string UserInput(List<string> inputValidationFromList)
+        {
+            while (true)
+            {
+                string input = Console.ReadLine();
+                if (inputValidationFromList.Contains(input.ToLower()))
+                {
+                    return input;
+                }
+                display.DisplayInfoAboutWrongInput();
+                        
+            }
+        }
 
-        public string UserInputMainMenu()
-        {
-            while (true)
-            {
-                string input = Console.ReadLine();
-                if (userInputMainMenu.Contains(input.ToLower()))
-                {
-                    return input;
-                }
-                display.DisplayInfoAboutWrongInput();
-            }
-        }
-        
-        public string UserInputInsideQuarter()
-        {
-            while (true)
-            {
-                string input = Console.ReadLine();
-                if (choiceInsideQuarter.Contains(input.ToLower()))
-                {
-                    return input;
-                }
-                display.DisplayInfoAboutWrongInput();
-            }
-        }
-        
         public string UserInputInQuarterItemChoice(int quantityOfItems)
         {
             while (true)
@@ -68,20 +43,7 @@ namespace EisenhowerCore
                 display.DisplayInfoAboutWrongInput();
             }
         }
-        
-        public string UserInputIsItemImportant()
-        {
-            while (true)
-            {
-                var input = Console.ReadLine();
-                if (isItemImportant.Contains(input.ToLower()))
-                {
-                    return input.ToLower();
-                }
-                display.DisplayInfoAboutWrongInput();
-            }
-        }
-        
+
         public string UserInputNewItemTitle()
         {
             while (true)
@@ -110,37 +72,37 @@ namespace EisenhowerCore
             }
         }
         
-        public QuarterType PickQuarterType()
-        {
-            while (true)
-            {
-                string input = Console.ReadLine().ToUpper();
-                if (QuarterTypes.Contains(input))
-                {
-                    QuarterType quarterType;
-                    if (input == "IU")
-                    {
-                        quarterType = QuarterType.IU;
-                    }
-                    else if (input == "NU")
-                    {
-                        quarterType = QuarterType.NU;
-                    }
-                    else if (input == "IN")
-                    {
-                        quarterType = QuarterType.IN;
-                    }
-                    else
-                    {
-                        quarterType = QuarterType.NN;   
-                    }
-
-                    return quarterType;
-
-                }
-                display.DisplayInfoAboutWrongInput();
-            }
-        }
+        // public QuarterType PickQuarterType()
+        // {
+        //     while (true)
+        //     {
+        //         string input = Console.ReadLine().ToUpper();
+        //         if (QuarterTypes.Contains(input))
+        //         {
+        //             QuarterType quarterType;
+        //             if (input == "IU")
+        //             {
+        //                 quarterType = QuarterType.IU;
+        //             }
+        //             else if (input == "NU")
+        //             {
+        //                 quarterType = QuarterType.NU;
+        //             }
+        //             else if (input == "IN")
+        //             {
+        //                 quarterType = QuarterType.IN;
+        //             }
+        //             else
+        //             {
+        //                 quarterType = QuarterType.NN;   
+        //             }
+        //
+        //             return quarterType;
+        //
+        //         }
+        //         display.DisplayInfoAboutWrongInput();
+        //     }
+        // }
         
         public string UserInput() => Console.ReadLine();
 

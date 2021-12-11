@@ -127,47 +127,124 @@ namespace EisenhowerCore
         public override string ToString()
         {
             string board = GenerateEmptyMatrix();
-            return replaceFieldsInMatrixWithItems(board);
+            return board;
         }
 
         private string GenerateEmptyMatrix()
         {
-            string board = "";
+            string board = @"";
+            string a = @"""""";
             
-            string important = CreateLines("IMPORTANT");
-            string notImportant = CreateLines("NOT IMPORTANT");
+            
+            string important = CreateBoardLeftSide("IMPORTANT");
+            string notImportant = CreateBoardLeftSide("NOT IMPORTANT");
+            string boardRightSide = CreateBoardRightSide();
             string leftSideSeparator = multiplySign("-", 50);
             string rightSideSeparator = multiplySign("-", 50);
+            string emptySpace = multiplySign(" ", 50);
+            string fieldForItem = CreateFieldForItems(emptySpace);
             string Urgent = multiplySign(" ", 22);
             string NotUrgent = multiplySign(" ", 20);
-            string separator = $"--|{leftSideSeparator}|{rightSideSeparator}|--{Environment.NewLine}";
+            string horizontalSeparator = $"--|{leftSideSeparator}|{rightSideSeparator}|--{Environment.NewLine}";
+            string verticalSeparator = CreateVerticalSeparator();
             string urgentNotUrgent = $"  |{Urgent}URGENT{Urgent}|{NotUrgent}NOT URGENT{NotUrgent}|  {Environment.NewLine}";
-            board += separator;
+            board += horizontalSeparator;
             board += urgentNotUrgent;
-            board += separator;
+            board += horizontalSeparator;
             board += important;
-            board += separator;
+            board += fieldForItem;
+            board += verticalSeparator;
+            board += fieldForItem;
+            board += boardRightSide;
+            board += horizontalSeparator;
             board += notImportant;
-            board += separator;
-            return board;
+            board += fieldForItem;
+            board += verticalSeparator;
+            board += fieldForItem;
+            board += boardRightSide;
+            board += horizontalSeparator;
+            a += important;
+            a += verticalSeparator;
+            return a;
         }
 
-        string CreateLines(string text) {
-            
-            string leftSide = multiplySign(" ", 50);
-            string rightSide = multiplySign(" ", 50);
-            string emptyLine = $"  |{leftSide}|{rightSide}|  {Environment.NewLine}";
-            string textField = "";
-            textField += emptyLine;
-            textField += emptyLine;
+        string CreateBoardLeftSide(string text) {
+            string emptyLine = $"  |{Environment.NewLine}";
+            string field = "";
+            field += emptyLine;
+            field += emptyLine;
             for (int i = 0; i < text.Length; i++)
             {
-                textField += $"{text[i]} |{leftSide}|{rightSide}|  {Environment.NewLine}";
+                if (i == text.Length)
+                {
+                    field += $"{text[i]} |";
+                }
+                else
+                {
+                    field += $"{text[i]} |{Environment.NewLine}";
+                }
+                
             }
-            textField += emptyLine;
-            textField += emptyLine;
+            field += emptyLine;
+            field += emptyLine;
 
-            return textField;
+            return field;
+        }
+        
+        string CreateBoardRightSide() {
+            
+            string field = "";
+            for (int i = 0; i <= 12; i++)
+            {
+                if (i == 12)
+                {
+                    field += $"|  ";
+                }
+                else
+                {
+                    field += $"|  {Environment.NewLine}";
+                }
+                
+            }
+            return field;
+        }
+
+        string CreateFieldForItems(string spaces)
+        {
+            string field = "";
+            for (int i = 0; i <= 12; i++)
+            {
+                if (i == 12)
+                {
+                    field += $"{spaces}";
+                }
+                else
+                {
+                    field += $"{spaces}{Environment.NewLine}";
+                }
+                
+            }
+
+            return field;
+        }
+
+        string CreateVerticalSeparator()
+        {
+            string field = "";
+            for (int i = 0; i <= 12; i++)
+            {
+                if (i == 12)
+                {
+                    field += "|";
+                }
+                else
+                {
+                    field += $"|{Environment.NewLine}";                    
+                }
+                
+            }
+
+            return field;
         }
 
         string multiplySign(string sign, int multiplier)
@@ -195,7 +272,7 @@ namespace EisenhowerCore
             }
             else
             {
-               
+                return board;
             }
         }
         

@@ -21,7 +21,7 @@ namespace EisenhowerCore
             {
                 display.ClearScreen();
                 display.PrintMainMenu();
-                string userChoice = input.UserInputMainMenu();
+                string userChoice = input.UserInput(input.userInputMainMenu);
                 int option = Int32.Parse(userChoice);
                 QuarterType quarterType = QuarterType.Matrix;
                 if (option == 6)
@@ -40,7 +40,7 @@ namespace EisenhowerCore
                     }
 
                     display.PrintSpecificMenu(quarterType);
-                    string userInput = input.UserInputInsideQuarter();
+                    string userInput = input.UserInput(input.choiceInsideQuarter);
                     int userAction = Int32.Parse(userInput);
                     CarryAction(userAction, quarterType);
                         
@@ -123,12 +123,12 @@ namespace EisenhowerCore
 
             if (action == 1)
             {
-                if (quarterType == QuarterType.Matrix)
-                {
-                    display.PrintMessage(display.chooseQuarterType);
-                    QuarterType quarter = input.PickQuarterType();
-                    quarterType = quarter;
-                }
+                // if (quarterType == QuarterType.Matrix)
+                // {
+                //     display.PrintMessage(display.chooseQuarterType);
+                //     QuarterType quarter = input.PickQuarterType();
+                //     quarterType = quarter;
+                // }
                 var NewItemData = CreateTitleDateImportanceForItem(); 
                 // So basically I started to organise this mess ^^, but still, there is a lot of to do. :D 
                 matrix.AddItem(NewItemData.Item1, NewItemData.Item2, NewItemData.Item3);
@@ -244,7 +244,7 @@ namespace EisenhowerCore
             DateTime convDeadline = input.ConvertDeadline(deadline);
 
             display.PrintMessage(display.isItImportant);
-            string isImportant = input.UserInputIsItemImportant();
+            string isImportant = input.UserInput(input.isItemImportant);
             bool IsImportantOrNot = input.CheckImportance(isImportant);
 
             return (title, convDeadline, IsImportantOrNot);
