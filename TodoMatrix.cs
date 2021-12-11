@@ -127,11 +127,14 @@ namespace EisenhowerCore
 
         private string GenerateHalfMatrix(QuarterType quaterType1, QuarterType quaterType2)
         {
+            string halfMatrix = $"";
             int quarterWidth = 30;
             int lines = 8;
             string wall = "|";
             string dash = "-";
             string space = " ";
+            string emptyHalfLine = multiplySign(space, quarterWidth);
+
             int Amount1 = TodoQuarters[quaterType1].HowManyItems();
             int Amount2 = TodoQuarters[quaterType2].HowManyItems();
             int max = Math.Max(Amount1, Amount2);
@@ -139,7 +142,7 @@ namespace EisenhowerCore
             {
                 lines = max;
             }
-            string halfMatrix = $"";
+
             int refilHeader1 = quarterWidth - display.headers[quaterType1].Length;
             int refilHeader2 = quarterWidth - display.headers[quaterType2].Length;
 
@@ -151,12 +154,12 @@ namespace EisenhowerCore
                 {
                     if (Amount2 == 0)
                     {
-                        halfMatrix += multiplySign(space, quarterWidth) + wall + multiplySign(space, quarterWidth) + "\n";
+                        halfMatrix += emptyHalfLine + wall + emptyHalfLine + "\n";
                     }
                     else
                     {
                         int refill = quarterWidth - TodoQuarters[quaterType2].GetItem(i).ToString().Length;
-                        halfMatrix += multiplySign(space, quarterWidth) + wall + TodoQuarters[quaterType2].GetItem(i) + multiplySign(space, refill) + "\n";
+                        halfMatrix += emptyHalfLine + wall + TodoQuarters[quaterType2].GetItem(i) + multiplySign(space, refill) + "\n";
                     }
                 }
                 else
@@ -164,7 +167,7 @@ namespace EisenhowerCore
                     if (Amount2 == 0)
                     {
                         int refill = quarterWidth - TodoQuarters[quaterType1].GetItem(i).ToString().Length;
-                        halfMatrix += TodoQuarters[quaterType1].GetItem(i) + multiplySign(space, refill) + wall + multiplySign(space, quarterWidth) + "\n";
+                        halfMatrix += TodoQuarters[quaterType1].GetItem(i) + multiplySign(space, refill) + wall + emptyHalfLine + "\n";
                     }
                     else
                     {
