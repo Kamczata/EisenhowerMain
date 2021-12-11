@@ -117,26 +117,21 @@ namespace EisenhowerCore
 
         public void CarryAction(int action, QuarterType quarterType)
         {
+            
             // All options should contain proper input and display needed to carry full operation
             //1 - add item
-            bool haveDoneItems = HasDoneOrUndoneItems("done", quarterType);
-            bool haveUndoneItems = HasDoneOrUndoneItems("undone", quarterType);
-            bool haveItemsToRemove = HaveItemsToRemove(quarterType);
 
             if (action == 1)
             {
-                display.PrintMessage(display.askForTitle);
-                string title = input.UserInputNewItemTitle();
-
-                display.PrintMessage(display.askForDeadline);
-                string deadline = input.UserInputNewItemDate();
-                DateTime convDeadline = input.ConvertDeadline(deadline);
-
-                display.PrintMessage(display.isItImportant);
-                string isImportant = input.UserInputIsItemImportant();
-                bool IsImportantOrNot = input.CheckImportance(isImportant);
-
-                matrix.AddItem(title, convDeadline, IsImportantOrNot);
+                if (quarterType == QuarterType.Matrix)
+                {
+                    display.PrintMessage(display.chooseQuarterType);
+                    QuarterType quarter = input.PickQuarterType();
+                    quarterType = quarter;
+                }
+                var NewItemData = CreateTitleDateImportanceForItem(); 
+                // So basically I started to organise this mess ^^, but still, there is a lot of to do. :D 
+                matrix.AddItem(NewItemData.Item1, NewItemData.Item2, NewItemData.Item3);
             }
             else if (action > 1 && action < 5)
             {
@@ -171,7 +166,7 @@ namespace EisenhowerCore
                     {
                         display.PrintMessage(display.provideFilepath);
                         string filepath = input.UserInput(); //How to check if user input is the same as filepath?
-                        matrix.AddItemsFromFile(filepath);
+                        matrix.AddItemsFromFile(filepath); //There is no escape if we dont have any file at this moment. ;)
                     }
                     
                 }
@@ -179,6 +174,7 @@ namespace EisenhowerCore
                 {
                     if (action == 2)
                     {
+                        bool haveItemsToRemove = HaveItemsToRemove(quarterType);
                         if (haveItemsToRemove)
                         {
                             int indexOfPickedItem = ItemPicker(quarterType);
@@ -192,6 +188,7 @@ namespace EisenhowerCore
                     }
                     else if (action == 3)
                     {
+                        bool haveUndoneItems = HasDoneOrUndoneItems("undone", quarterType);
                         if (haveUndoneItems) 
                         {
                             int indexOfPickedItem = ItemPicker(quarterType);
@@ -211,6 +208,7 @@ namespace EisenhowerCore
                     }
                     else if (action == 4)
                     {
+                        bool haveDoneItems = HasDoneOrUndoneItems("done", quarterType);
                         if (haveDoneItems)
                         {
                             int indexOfPickedItem = ItemPicker(quarterType);
@@ -236,6 +234,20 @@ namespace EisenhowerCore
             }
             
         }
+        (string, DateTime, bool) CreateTitleDateImportanceForItem()
+        {
+            display.PrintMessage(display.askForTitle);
+            string title = input.UserInputNewItemTitle();
 
+            display.PrintMessage(display.askForDeadline);
+            string deadline = input.UserInputNewItemDate();
+            DateTime convDeadline = input.ConvertDeadline(deadline);
+
+            display.PrintMessage(display.isItImportant);
+            string isImportant = input.UserInputIsItemImportant();
+            bool IsImportantOrNot = input.CheckImportance(isImportant);
+
+            return (title, convDeadline, IsImportantOrNot);
+        }
     }
 }

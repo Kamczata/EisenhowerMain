@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace EisenhowerCore
 {
@@ -125,8 +126,79 @@ namespace EisenhowerCore
 
         public override string ToString()
         {
-            return "-----------";
+            string board = GenerateEmptyMatrix();
+            return replaceFieldsInMatrixWithItems(board);
         }
+
+        private string GenerateEmptyMatrix()
+        {
+            string board = "";
+            
+            string important = CreateLines("IMPORTANT");
+            string notImportant = CreateLines("NOT IMPORTANT");
+            string leftSideSeparator = multiplySign("-", 50);
+            string rightSideSeparator = multiplySign("-", 50);
+            string Urgent = multiplySign(" ", 22);
+            string NotUrgent = multiplySign(" ", 20);
+            string separator = $"--|{leftSideSeparator}|{rightSideSeparator}|--{Environment.NewLine}";
+            string urgentNotUrgent = $"  |{Urgent}URGENT{Urgent}|{NotUrgent}NOT URGENT{NotUrgent}|  {Environment.NewLine}";
+            board += separator;
+            board += urgentNotUrgent;
+            board += separator;
+            board += important;
+            board += separator;
+            board += notImportant;
+            board += separator;
+            return board;
+        }
+
+        string CreateLines(string text) {
+            
+            string leftSide = multiplySign(" ", 50);
+            string rightSide = multiplySign(" ", 50);
+            string emptyLine = $"  |{leftSide}|{rightSide}|  {Environment.NewLine}";
+            string textField = "";
+            textField += emptyLine;
+            textField += emptyLine;
+            for (int i = 0; i < text.Length; i++)
+            {
+                textField += $"{text[i]} |{leftSide}|{rightSide}|  {Environment.NewLine}";
+            }
+            textField += emptyLine;
+            textField += emptyLine;
+
+            return textField;
+        }
+
+        string multiplySign(string sign, int multiplier)
+        {
+            return String.Concat(Enumerable.Repeat(sign, multiplier));
+        }
+
+        string replaceFieldsInMatrixWithItems(string board)
+        {
+            TodoMatrix matrix = new TodoMatrix();
+            int counter = 0;
+            var allQuarters = matrix.GetQuarters();
+            foreach (TodoQuarter toDoQuarter in allQuarters.Values)
+            {
+                if (toDoQuarter.GetItems().Any() == false)
+                {
+                    counter++;
+                }
+                // split replace
+            }
+
+            if (counter == 4)
+            {
+                return board;
+            }
+            else
+            {
+               
+            }
+        }
+        
     }
 
 
