@@ -42,7 +42,7 @@ public class TodoItem
             return ((this.IsDone ? "[x]" : "[ ]") + $" {dateAndTitle}");
         }
 
-
+        public int GetTitleLength() => Title.Length;
 
 
     }

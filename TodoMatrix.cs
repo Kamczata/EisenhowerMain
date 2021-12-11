@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace EisenhowerCore
 {
@@ -9,6 +10,7 @@ namespace EisenhowerCore
     public class TodoMatrix {
 
         private Dictionary<QuarterType, TodoQuarter> TodoQuarters = new Dictionary<QuarterType, TodoQuarter>();
+        private Display display = new Display();
 
         public TodoMatrix()
         {
@@ -123,15 +125,81 @@ namespace EisenhowerCore
             
         }
 
+        private string GenerateHalfMatrix(QuarterType quaterType1, QuarterType quaterType2)
+        {
+            int quarterWidth = 30;
+            int lines = 8;
+            string wall = "|";
+            string dash = "-";
+            string space = " ";
+            int Amount1 = TodoQuarters[quaterType1].HowManyItems();
+            int Amount2 = TodoQuarters[quaterType2].HowManyItems();
+            int max = Math.Max(Amount1, Amount2);
+            if (max > lines)
+            {
+                lines = max;
+            }
+            string halfMatrix = $"";
+            int refilHeader1 = quarterWidth - display.headers[quaterType1].Length;
+            int refilHeader2 = quarterWidth - display.headers[quaterType2].Length;
+
+            halfMatrix += display.headers[quaterType1] + multiplySign(space, refilHeader1) + wall + display.headers[quaterType2] + multiplySign(space, refilHeader2) + "\n";
+            halfMatrix += multiplySign(dash, quarterWidth * 2 + 1) + "\n";
+            for (int i = 0; i < lines; i++)
+            {
+                if (Amount1 == 0 || Amount1 - 1 < i)
+                {
+                    if (Amount2 == 0 || Amount2 - 1 < i)
+                    {
+                        halfMatrix += multiplySign(space, quarterWidth) + wall + multiplySign(space, quarterWidth) + "\n";
+                    }
+                    else
+                    {
+                        int refill = quarterWidth - TodoQuarters[quaterType2].GetItem(i).ToString().Length;
+                        halfMatrix += multiplySign(space, quarterWidth) + wall + TodoQuarters[quaterType2].GetItem(i) + multiplySign(space, refill) + "\n";
+                    }
+                }
+                else
+                {
+                    if (Amount2 == 0 || Amount2 - 1 < i)
+                    {
+                        int refill = quarterWidth - TodoQuarters[quaterType1].GetItem(i).ToString().Length;
+                        halfMatrix += TodoQuarters[quaterType1].GetItem(i) + multiplySign(space, refill) + wall + multiplySign(space, quarterWidth) + "\n";
+                    }
+                    else
+                    {
+                        int refill = quarterWidth - TodoQuarters[quaterType1].GetItem(i).ToString().Length;
+                        int refill2 = quarterWidth - TodoQuarters[quaterType2].GetItem(i).ToString().Length;
+                        halfMatrix += TodoQuarters[quaterType1].GetItem(i) + multiplySign(space, refill) + wall + TodoQuarters[quaterType2].GetItem(i) + multiplySign(space, refill2) + "\n";
+                    }
+                }
+            }
+            halfMatrix += multiplySign(dash, quarterWidth * 2 + 1) + "\n";
+
+            return halfMatrix;
+
+
+        }
+
         public override string ToString()
         {
-            return base.ToString();
+            string matrix = $"";
+            matrix += GenerateHalfMatrix(QuarterType.IU, QuarterType.IN);
+            matrix += GenerateHalfMatrix(QuarterType.NU, QuarterType.NN);
+
+            return matrix;
+        }
+
+        public string multiplySign(string sign, int multiplier)
+        {
+            return String.Concat(Enumerable.Repeat(sign, multiplier));
         }
     }
+    
 
 
-        
-              
+
+
 
 
 }
