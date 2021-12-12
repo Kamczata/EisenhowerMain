@@ -54,7 +54,7 @@ Not Urgent & Not Important(NN)";
             "If you had any 'Done' tasks, your file should be in your project/bin/debug. Press any key to continue.";
         
 
-        private Dictionary<QuarterType, string> headers = new Dictionary<QuarterType, string>() {
+        public static readonly Dictionary<QuarterType, string> headers = new Dictionary<QuarterType, string>() {
             { QuarterType.IU, "Urgent & Important" },
             { QuarterType.NU, "Urgent & Not Important" },
             { QuarterType.IN, "Not Urgent & Important" },

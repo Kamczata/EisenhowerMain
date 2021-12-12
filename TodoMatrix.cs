@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 
 namespace EisenhowerCore
 {
 
-    
-    public class TodoMatrix {
+
+    public class TodoMatrix
+    {
 
         private Dictionary<QuarterType, TodoQuarter> TodoQuarters = new Dictionary<QuarterType, TodoQuarter>();
 
@@ -35,41 +37,42 @@ namespace EisenhowerCore
             {
                 TodoQuarters[QuarterType.IU].AddItem(title, deadline);
             }
-            else if(isUrgent && !isImportant)
+            else if (isUrgent && !isImportant)
             {
                 TodoQuarters[QuarterType.NU].AddItem(title, deadline);
             }
-            else if(!isUrgent && isImportant)
+            else if (!isUrgent && isImportant)
             {
                 TodoQuarters[QuarterType.IN].AddItem(title, deadline);
             }
-            else if(!isUrgent && !isImportant)
+            else if (!isUrgent && !isImportant)
             {
                 TodoQuarters[QuarterType.NN].AddItem(title, deadline);
             }
         }
-        
+
         private bool IsUrgent(DateTime deadline)
         {
             DateTime today = DateTime.Today;
-            if ((deadline - today).TotalDays >= 3 )
+            if ((deadline - today).TotalDays >= 3)
             {
                 return false;
             }
+
             return true;
         }
 
         public void AddItemsFromFile(string fileName)
         {
             string[] lines = System.IO.File.ReadAllLines(fileName);
-            foreach(string line in lines)
+            foreach (string line in lines)
             {
                 string[] item = line.Split('|');
                 string title = item[0];
                 string[] date = item[1].Split('-');
                 bool isImportant;
                 DateTime deadline = new DateTime(DateTime.Today.Year, Int32.Parse(date[1]), Int32.Parse(date[0]));
-                if (item[2]==" ")
+                if (item[2] == " ")
                 {
                     isImportant = false;
                 }
@@ -77,12 +80,13 @@ namespace EisenhowerCore
                 {
                     isImportant = true;
                 }
+
                 this.AddItem(title, deadline, isImportant);
-                
+
             }
         }
-    
-  
+
+
         public void SaveItemsToFile(string fileName) //https://www.youtube.com/watch?v=vDpww7HsdnM
         {
             foreach (KeyValuePair<QuarterType, TodoQuarter> quarter in TodoQuarters)
@@ -113,175 +117,137 @@ namespace EisenhowerCore
             }
 
         }
-        
+
         public void ArchiveItems()
         {
-            foreach(TodoQuarter quarter in TodoQuarters.Values)
+            foreach (TodoQuarter quarter in TodoQuarters.Values)
             {
                 // List<TodoItem> list = quarter.GetItems();
                 quarter.GetItems().RemoveAll(item => item.IsDone);
             }
-            
+
         }
 
         public override string ToString()
         {
-            string board = GenerateEmptyMatrix();
-            return board;
-        }
-
-        private string GenerateEmptyMatrix()
-        {
-            string board = @"";
-            string a = @"""""";
-            
-            
-            string important = CreateBoardLeftSide("IMPORTANT");
-            string notImportant = CreateBoardLeftSide("NOT IMPORTANT");
-            string boardRightSide = CreateBoardRightSide();
-            string leftSideSeparator = multiplySign("-", 50);
-            string rightSideSeparator = multiplySign("-", 50);
-            string emptySpace = multiplySign(" ", 50);
-            string fieldForItem = CreateFieldForItems(emptySpace);
-            string Urgent = multiplySign(" ", 22);
-            string NotUrgent = multiplySign(" ", 20);
-            string horizontalSeparator = $"--|{leftSideSeparator}|{rightSideSeparator}|--{Environment.NewLine}";
-            string verticalSeparator = CreateVerticalSeparator();
-            string urgentNotUrgent = $"  |{Urgent}URGENT{Urgent}|{NotUrgent}NOT URGENT{NotUrgent}|  {Environment.NewLine}";
-            board += horizontalSeparator;
-            board += urgentNotUrgent;
-            board += horizontalSeparator;
-            board += important;
-            board += fieldForItem;
-            board += verticalSeparator;
-            board += fieldForItem;
-            board += boardRightSide;
-            board += horizontalSeparator;
-            board += notImportant;
-            board += fieldForItem;
-            board += verticalSeparator;
-            board += fieldForItem;
-            board += boardRightSide;
-            board += horizontalSeparator;
-            a += important;
-            a += verticalSeparator;
-            return a;
-        }
-
-        string CreateBoardLeftSide(string text) {
-            string emptyLine = $"  |{Environment.NewLine}";
-            string field = "";
-            field += emptyLine;
-            field += emptyLine;
-            for (int i = 0; i < text.Length; i++)
+            string matrix = $"";
+            foreach (KeyValuePair<QuarterType, TodoQuarter> quarter in TodoQuarters)
             {
-                if (i == text.Length)
-                {
-                    field += $"{text[i]} |";
-                }
-                else
-                {
-                    field += $"{text[i]} |{Environment.NewLine}";
-                }
-                
-            }
-            field += emptyLine;
-            field += emptyLine;
+                matrix += $"{multiplySign("-", 50)}{Environment.NewLine}";
+                matrix += $"{Display.headers[quarter.Key]}{Environment.NewLine}";
+                matrix += $"{multiplySign("-", 50)}{Environment.NewLine}";
+                matrix += $"{quarter.Value}{Environment.NewLine}";
 
-            return field;
-        }
-        
-        string CreateBoardRightSide() {
-            
-            string field = "";
-            for (int i = 0; i <= 12; i++)
-            {
-                if (i == 12)
-                {
-                    field += $"|  ";
-                }
-                else
-                {
-                    field += $"|  {Environment.NewLine}";
-                }
-                
-            }
-            return field;
-        }
-
-        string CreateFieldForItems(string spaces)
-        {
-            string field = "";
-            for (int i = 0; i <= 12; i++)
-            {
-                if (i == 12)
-                {
-                    field += $"{spaces}";
-                }
-                else
-                {
-                    field += $"{spaces}{Environment.NewLine}";
-                }
-                
             }
 
-            return field;
+            return matrix;
+            // var emptyMatrix =  GenerateEmptyMatrix();
+            // return replaceFieldsInMatrixWithItems(emptyMatrix);
+
         }
 
-        string CreateVerticalSeparator()
-        {
-            string field = "";
-            for (int i = 0; i <= 12; i++)
-            {
-                if (i == 12)
-                {
-                    field += "|";
-                }
-                else
-                {
-                    field += $"|{Environment.NewLine}";                    
-                }
-                
-            }
-
-            return field;
-        }
-
+        //     private string GenerateEmptyMatrix()
+        //     {
+        //         string board = @"";
+        //         
+        //         
+        //         
+        //         string important = CreatePartWithName("IMPORTANT");
+        //         string notImportant = CreatePartWithName("NOT IMPORTANT");
+        //         string rightSideSeparator = multiplySign("-", 50);
+        //         string emptySpace = multiplySign(" ", 50);
+        //         string Urgent = multiplySign(" ", 22);
+        //         string NotUrgent = multiplySign(" ", 20);
+        //         string horizontalSeparator = $"--|{rightSideSeparator}-{rightSideSeparator}|--{Environment.NewLine}";
+        //         string urgentNotUrgent = $"  |{Urgent}URGENT{Urgent}|{NotUrgent}NOT URGENT{NotUrgent}|  {Environment.NewLine}";
+        //         board += horizontalSeparator;
+        //         board += urgentNotUrgent;
+        //         board += horizontalSeparator;
+        //         board += important;
+        //         board += horizontalSeparator;
+        //         board += notImportant;
+        //         board += horizontalSeparator;
+        //         return board;
+        //     }
+        //
+        //     string CreatePartWithName(string text) {
+        //         string emptySpace = multiplySign(" ", 50);
+        //         string emptyLine = $"  |{emptySpace}|{emptySpace}|  {Environment.NewLine}";
+        //         string field = "";
+        //         field += emptyLine;
+        //         field += emptyLine;
+        //         for (int i = 0; i < text.Length; i++)
+        //         {
+        //             field += $"{text[i]} |{emptySpace}|{emptySpace}|  {Environment.NewLine}";
+        //         }
+        //         field += emptyLine;
+        //         field += emptyLine;
+        //
+        //         return field;
+        //     }
+        //
         string multiplySign(string sign, int multiplier)
         {
             return String.Concat(Enumerable.Repeat(sign, multiplier));
         }
+        //
+        //     string replaceFieldsInMatrixWithItems(string board)
+        //     {
+        //         TodoMatrix matrix = new TodoMatrix();
+        //         int counter = 0;
+        //         var allQuarters = matrix.GetQuarters();
+        //         foreach (TodoQuarter toDoQuarter in allQuarters.Values)
+        //         {
+        //             if (toDoQuarter.GetItems().Any() == false)
+        //             {
+        //                 counter++;
+        //             }
+        //             // split replace
+        //         }
+        //
+        //         if (counter == 4)
+        //         {
+        //             return board;
+        //         }
+        //         else
+        //         {
+        //             foreach (KeyValuePair<QuarterType, TodoQuarter> quarter in allQuarters)
+        //             {
+        //                 if (quarter.Value.GetItems().Count >= 1)
+        //                 {
+        //                     if (quarter.Key == QuarterType.IN)
+        //                     {
+        //                         using (StringReader reader = new StringReader(board))
+        //                         {
+        //                             string line;
+        //                             line = reader.ReadLine();
+        //                             for (int i = 3; i < 15; i++)
+        //                             {
+        //                                 while ((line = reader.ReadLine()) != null)
+        //                                 {
+        //                                 
+        //                                 }
+        //                             }
+        //                             
+        //                            
+        //                             
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     
+        // }
+        //
+        //
+        // foreach (string line in new LineReader(() => new StringReader(text)))
+        // {
+        // Console.WriteLine(line);
+        // }
 
-        string replaceFieldsInMatrixWithItems(string board)
-        {
-            TodoMatrix matrix = new TodoMatrix();
-            int counter = 0;
-            var allQuarters = matrix.GetQuarters();
-            foreach (TodoQuarter toDoQuarter in allQuarters.Values)
-            {
-                if (toDoQuarter.GetItems().Any() == false)
-                {
-                    counter++;
-                }
-                // split replace
-            }
 
-            if (counter == 4)
-            {
-                return board;
-            }
-            else
-            {
-                return board;
-            }
-        }
-        
+
     }
-
-
-        
-              
-
-
 }
 

@@ -129,7 +129,7 @@ namespace EisenhowerCore
             while (true)
             {
                 string input = Console.ReadLine();
-                if (input.Length >= 4 && input.Contains("."))
+                if (input.Length >= 5 && input.Contains("."))
                 {
                     string firstPart = input.Split('.')[0];
                     string secondPart = input.Split('.')[1];
