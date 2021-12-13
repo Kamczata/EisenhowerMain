@@ -117,8 +117,7 @@ namespace EisenhowerCore
         {
             // All options should contain proper input and display needed to carry full operation
             //1 - add item
-            bool haveDoneItems = HasDoneOrUndoneItems("done", quarterType);
-            bool haveUndoneItems = HasDoneOrUndoneItems("undone", quarterType);
+            
 
             if (action == 1)
             {
@@ -170,12 +169,17 @@ namespace EisenhowerCore
                         string filepath = input.UserInput();
                         matrix.AddItemsFromFile(filepath);
                     }
-                    
+                    else if (action == 5)
+                    {
+                        input.PressAnyKey();
+                    }
+
                 }
                 else 
                 {
                     // DO AKCJI 2-4 PRZYDALABY SIE POMOCNICZA FUNKCJA ItemPicker 
-                    
+                    bool haveDoneItems = HasDoneOrUndoneItems("done", quarterType);
+                    bool haveUndoneItems = HasDoneOrUndoneItems("undone", quarterType);
                     if (action == 2)
                     {
                         int indexOfPickedItem = ItemPicker(quarterType);
@@ -218,12 +222,14 @@ namespace EisenhowerCore
                             input.PressAnyKey();
                         }
                     }
+                    
 
                 }
             }
             else if (action == 5)
             {
                 //Najlepsze rozwiązanie to zostawić to puste i wtedy samo wróci do głównego menu :p
+                input.PressAnyKey();
             }
             
         }

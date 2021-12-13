@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace EisenhowerCore
 {
@@ -62,7 +63,21 @@ namespace EisenhowerCore
 
         public void AddItemsFromFile(string fileName)
         {
-            string[] lines = System.IO.File.ReadAllLines(fileName);
+            List<string> lines = new List<string>();
+            using (System.IO.StreamReader file = new System.IO.StreamReader(fileName, true))
+            {
+                StringBuilder resultBuilder = new StringBuilder();
+
+                string strCurrentLine;
+
+                while ((strCurrentLine = file.ReadLine()) != null)
+                {
+                    lines.Add(strCurrentLine);
+                }
+                
+            }
+
+            
             foreach(string line in lines)
             {
                 string[] item = line.Split('|');
@@ -70,7 +85,7 @@ namespace EisenhowerCore
                 string[] date = item[1].Split('-');
                 bool isImportant;
                 DateTime deadline = new DateTime(DateTime.Today.Year, Int32.Parse(date[1]), Int32.Parse(date[0]));
-                if (item[2]==" ")
+                if (item[2]=="Not important")
                 {
                     isImportant = false;
                 }
@@ -128,7 +143,7 @@ namespace EisenhowerCore
         private string GenerateHalfMatrix(QuarterType quaterType1, QuarterType quaterType2)
         {
             string halfMatrix = $"";
-            int quarterWidth = 30;
+            int quarterWidth = 40;
             int lines = 8;
             string wall = "|";
             string dash = "-";
@@ -150,9 +165,9 @@ namespace EisenhowerCore
             halfMatrix += multiplySign(dash, quarterWidth * 2 + 1) + "\n";
             for (int i = 0; i < lines; i++)
             {
-                if (Amount1 == 0)
+                if (Amount1 == 0 || i+1 > Amount1)
                 {
-                    if (Amount2 == 0)
+                    if (Amount2 == 0 || i+1 > Amount2)
                     {
                         halfMatrix += emptyHalfLine + wall + emptyHalfLine + "\n";
                     }
@@ -164,7 +179,7 @@ namespace EisenhowerCore
                 }
                 else
                 {
-                    if (Amount2 == 0)
+                    if (Amount2 == 0 || i+1>Amount2)
                     {
                         int refill = quarterWidth - TodoQuarters[quaterType1].GetItem(i).ToString().Length;
                         halfMatrix += TodoQuarters[quaterType1].GetItem(i) + multiplySign(space, refill) + wall + emptyHalfLine + "\n";
@@ -195,6 +210,10 @@ namespace EisenhowerCore
 
         public string multiplySign(string sign, int multiplier)
         {
+            if (multiplier<0)
+            {
+                multiplier = 1;
+            }    
             return String.Concat(Enumerable.Repeat(sign, multiplier));
         }
     }
