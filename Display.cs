@@ -47,7 +47,7 @@ MAIN MENU:
             "If you had any 'Done' tasks, your file should be in your project/bin/debug. Press any key to continue.";
         
 
-        public Dictionary<QuarterType, string> headers = new Dictionary<QuarterType, string>() {
+        public readonly Dictionary<QuarterType, string> headers = new Dictionary<QuarterType, string>() {
             { QuarterType.IU, "Urgent & Important" },
             { QuarterType.NU, "Urgent & Not Important" },
             { QuarterType.IN, "Not Urgent & Important" },

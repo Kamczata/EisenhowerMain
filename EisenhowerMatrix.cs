@@ -42,7 +42,18 @@ namespace EisenhowerCore
                     string userInput = input.UserInput();
                     int userAction = Int32.Parse(userInput);
                     CarryAction(userAction, quarterType);
-                        
+                    if (option <5)
+                    {
+                        display.DisplayQuarter(matrix.GetQuarter(quarterType), quarterType);
+                    }
+                    else
+                    {
+                        display.DisplayMatrix(this.matrix);
+                    }
+                    display.PrintSpecificMenu(quarterType);
+                    string userInput2 = input.UserInput();
+                    int userAction2 = Int32.Parse(userInput2);
+                    CarryAction(userAction2, quarterType);
                 }
             }
             
@@ -222,6 +233,10 @@ namespace EisenhowerCore
                             input.PressAnyKey();
                         }
                     }
+                    else if (action == 5)
+                    {
+                        input.PressAnyKey();
+                    }
                     
 
                 }
@@ -229,7 +244,6 @@ namespace EisenhowerCore
             else if (action == 5)
             {
                 //Najlepsze rozwiązanie to zostawić to puste i wtedy samo wróci do głównego menu :p
-                input.PressAnyKey();
             }
             
         }
