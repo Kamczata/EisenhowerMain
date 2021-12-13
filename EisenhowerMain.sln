@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EisenhowerMain", "EisenhowerMain.csproj", "{33959F2C-ACFB-430C-8619-B1078C2AC63C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EisenhowerMain.Tests", "..\EisenhowerMain.Tests\EisenhowerMain.Tests.csproj", "{0EEAB91A-D07C-4AA2-8A94-3B271B0BF9F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EisenhowerMain.Tests", "..\EisenhowerMain.Tests\EisenhowerMain.Tests.csproj", "{0EEAB91A-D07C-4AA2-8A94-3B271B0BF9F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
