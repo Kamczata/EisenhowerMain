@@ -244,6 +244,7 @@ namespace EisenhowerCore
             else if (action == 5)
             {
                 //Najlepsze rozwiązanie to zostawić to puste i wtedy samo wróci do głównego menu :p
+                input.PressAnyKey();
             }
             
         }
