@@ -43,7 +43,18 @@ namespace EisenhowerCore
                     string userInput = input.UserInput(input.choiceInsideQuarter);
                     int userAction = Int32.Parse(userInput);
                     CarryAction(userAction, quarterType);
-                        
+                    if (option <5)
+                    {
+                        display.DisplayQuarter(matrix.GetQuarter(quarterType), quarterType);
+                    }
+                    else
+                    {
+                        display.DisplayMatrix(this.matrix);
+                    }
+                    display.PrintSpecificMenu(quarterType);
+                    string userInput2 = input.UserInput();
+                    int userAction2 = Int32.Parse(userInput2);
+                    CarryAction(userAction2, quarterType);
                 }
             }
             
@@ -120,6 +131,7 @@ namespace EisenhowerCore
             
             // All options should contain proper input and display needed to carry full operation
             //1 - add item
+            
 
             if (action == 1)
             {
@@ -168,10 +180,17 @@ namespace EisenhowerCore
                         string filepath = input.UserInput(); //How to check if user input is the same as filepath?
                         matrix.AddItemsFromFile(filepath); //There is no escape if we dont have any file at this moment. ;)
                     }
-                    
+                    else if (action == 5)
+                    {
+                        input.PressAnyKey();
+                    }
+
                 }
                 else 
                 {
+                    // DO AKCJI 2-4 PRZYDALABY SIE POMOCNICZA FUNKCJA ItemPicker 
+                    //bool haveDoneItems = HasDoneOrUndoneItems("done", quarterType);
+                    //bool haveUndoneItems = HasDoneOrUndoneItems("undone", quarterType);
                     if (action == 2)
                     {
                         bool haveItemsToRemove = HaveItemsToRemove(quarterType);
@@ -225,12 +244,16 @@ namespace EisenhowerCore
                             input.PressAnyKey();
                         }
                     }
+                    else if (action == 5)
+                    {
+                        input.PressAnyKey();
+                    }
 
                 }
             }
             else if (action == 5)
             {
-                //Ok, not the best option to leave this field empty, but it works. :p
+                input.PressAnyKey();
             }
             
         }
