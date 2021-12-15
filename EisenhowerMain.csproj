@@ -6,12 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="TextFile1.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TextFile2.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Manager\" />
   </ItemGroup>
 
 </Project>
