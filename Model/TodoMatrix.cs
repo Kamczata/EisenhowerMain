@@ -32,24 +32,24 @@ namespace EisenhowerCore
         }
 
 
-        public void AddItem(String title, DateTime deadline, bool isImportant)
+        public void AddItem(int id, String title, DateTime deadline, bool isImportant, int matrixId)
         {
             bool isUrgent = IsUrgent(deadline);
             if (isUrgent && isImportant)
             {
-                TodoQuarters[QuarterType.IU].AddItem(title, deadline);
+                TodoQuarters[QuarterType.IU].AddItem(id, title, deadline, isImportant, matrixId);
             }
             else if (isUrgent && !isImportant)
             {
-                TodoQuarters[QuarterType.NU].AddItem(title, deadline);
+                TodoQuarters[QuarterType.NU].AddItem(id, title, deadline, isImportant, matrixId);
             }
             else if (!isUrgent && isImportant)
             {
-                TodoQuarters[QuarterType.IN].AddItem(title, deadline);
+                TodoQuarters[QuarterType.IN].AddItem(id, title, deadline, isImportant, matrixId);
             }
             else if (!isUrgent && !isImportant)
             {
-                TodoQuarters[QuarterType.NN].AddItem(title, deadline);
+                TodoQuarters[QuarterType.NN].AddItem(id, title, deadline, isImportant, matrixId);
             }
         }
 
@@ -64,75 +64,7 @@ namespace EisenhowerCore
             return true;
         }
 
-        public void AddItemsFromFile(string fileName)
-        {
-            List<string> lines = new List<string>();
-            using (System.IO.StreamReader file = new System.IO.StreamReader(fileName, true))
-            {
-                StringBuilder resultBuilder = new StringBuilder();
-
-                string strCurrentLine;
-
-                while ((strCurrentLine = file.ReadLine()) != null)
-                {
-                    lines.Add(strCurrentLine);
-                }
-                
-            }
-
-            
-            foreach(string line in lines)
-            {
-                string[] item = line.Split('|');
-                string title = item[0];
-                string[] date = item[1].Split('-');
-                bool isImportant;
-                DateTime deadline = new DateTime(DateTime.Today.Year, Int32.Parse(date[1]), Int32.Parse(date[0]));
-                if (item[2]=="Not important")
-                {
-                    isImportant = false;
-                }
-                else
-                {
-                    isImportant = true;
-                }
-
-                this.AddItem(title, deadline, isImportant);
-
-            }
-        }
-
-
-        public void SaveItemsToFile(string fileName) //https://www.youtube.com/watch?v=vDpww7HsdnM
-        {
-            foreach (KeyValuePair<QuarterType, TodoQuarter> quarter in TodoQuarters)
-            {
-                var list = quarter.Value.GetItems();
-                foreach (var item in list)
-                {
-                    try
-                    {
-                        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@fileName, true))
-                        {
-                            if (item.IsDone && quarter.Key == QuarterType.IN || quarter.Key == QuarterType.IU)
-                            {
-                                file.WriteLine($"{item.Title}|{item.Deadline}|is_important");
-                            }
-                            else
-                            {
-                                file.WriteLine($"{item.Title}|{item.Deadline}| ");
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ApplicationException("This program made an error: ", ex);
-                    }
-
-                }
-            }
-
-        }
+       
 
         public void ArchiveItems()
         {

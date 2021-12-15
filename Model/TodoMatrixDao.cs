@@ -8,6 +8,13 @@ namespace EisenhowerCore
 {
     public class TodoMatrixDao : ITodoMatrixDao
     {
+        private readonly string _connectionString;
+
+        public TodoMatrixDao(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
         public void Add()
         {
             throw new NotImplementedException();

@@ -3,14 +3,21 @@ using System;
 namespace EisenhowerCore {
 public class TodoItem
     {
+        public int Id { get; set; }
         public string Title {  get; private set; }
         public DateTime Deadline {  get; private set; }
         public bool IsDone { get; private set; }
+        public bool IsImportant { get; private set; }
+        public int MatrixId { get; set; }
 
-        public TodoItem(string title, DateTime deadline)
+
+        public TodoItem(int id, string title, DateTime deadline, bool isImportant, int matrixId)
         {
+            Id = id;
             Title = title;
             Deadline = deadline;
+            this.IsImportant = isImportant;
+            MatrixId = matrixId;
             IsDone = false;
         }
 

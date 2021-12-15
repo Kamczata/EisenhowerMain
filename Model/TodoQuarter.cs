@@ -14,10 +14,10 @@ namespace EisenhowerCore {
         public TodoQuarter()
         {
         }
-       
-        public void AddItem(string title, DateTime deadline)
+
+        public void AddItem(int id, string title, DateTime deadline, bool isImportant, int matrixId)
         {
-            TodoItem newItem = new TodoItem(title,deadline);
+            TodoItem newItem = new TodoItem(id, title, deadline, isImportant, matrixId);
             ToDoItems.Add(newItem);
         }
 

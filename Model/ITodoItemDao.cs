@@ -8,7 +8,7 @@ namespace EisenhowerCore
 {
     public interface ITodoItemDao
     {
-        public void Add();
+        public void Add(TodoItem item);
 
         public void Mark(int id);
 

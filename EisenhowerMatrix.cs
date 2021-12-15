@@ -143,7 +143,7 @@ namespace EisenhowerCore
                 // }
                 var NewItemData = CreateTitleDateImportanceForItem(); 
                 // So basically I started to organise this mess ^^, but still, there is a lot of to do. :D 
-                matrix.AddItem(NewItemData.Item1, NewItemData.Item2, NewItemData.Item3);
+               // matrix.AddItem(NewItemData.Item1, NewItemData.Item2, NewItemData.Item3);
             }
             else if (action > 1 && action < 5)
             {
@@ -169,7 +169,7 @@ namespace EisenhowerCore
                     {
                         display.PrintMessage(display.askForFilename);
                         string filename = input.UserInputSaveToFile();
-                        matrix.SaveItemsToFile(filename);
+                        //matrix.SaveItemsToFile(filename);
                         display.PrintMessage(display.confirmationFilesSaved);
                         input.PressAnyKey();
                     }
@@ -178,7 +178,7 @@ namespace EisenhowerCore
                     {
                         display.PrintMessage(display.provideFilepath);
                         string filepath = input.UserInput(); //How to check if user input is the same as filepath?
-                        matrix.AddItemsFromFile(filepath); //There is no escape if we dont have any file at this moment. ;)
+                        //matrix.AddItemsFromFile(filepath); //There is no escape if we dont have any file at this moment. ;)
                     }
                     else if (action == 5)
                     {
