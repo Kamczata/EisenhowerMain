@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Net.Mime;
 
 namespace EisenhowerCore
 {
 
-    
-    public class TodoMatrix {
+
+    public class TodoMatrix
+    {
 
         private Dictionary<QuarterType, TodoQuarter> TodoQuarters = new Dictionary<QuarterType, TodoQuarter>();
         private Display display = new Display();
@@ -37,27 +38,28 @@ namespace EisenhowerCore
             {
                 TodoQuarters[QuarterType.IU].AddItem(title, deadline);
             }
-            else if(isUrgent && !isImportant)
+            else if (isUrgent && !isImportant)
             {
                 TodoQuarters[QuarterType.NU].AddItem(title, deadline);
             }
-            else if(!isUrgent && isImportant)
+            else if (!isUrgent && isImportant)
             {
                 TodoQuarters[QuarterType.IN].AddItem(title, deadline);
             }
-            else if(!isUrgent && !isImportant)
+            else if (!isUrgent && !isImportant)
             {
                 TodoQuarters[QuarterType.NN].AddItem(title, deadline);
             }
         }
-        
+
         private bool IsUrgent(DateTime deadline)
         {
             DateTime today = DateTime.Today;
-            if ((deadline - today).TotalDays >= 3 )
+            if ((deadline - today).TotalDays >= 3)
             {
                 return false;
             }
+
             return true;
         }
 
@@ -93,12 +95,13 @@ namespace EisenhowerCore
                 {
                     isImportant = true;
                 }
+
                 this.AddItem(title, deadline, isImportant);
-                
+
             }
         }
-    
-  
+
+
         public void SaveItemsToFile(string fileName) //https://www.youtube.com/watch?v=vDpww7HsdnM
         {
             foreach (KeyValuePair<QuarterType, TodoQuarter> quarter in TodoQuarters)
@@ -129,15 +132,15 @@ namespace EisenhowerCore
             }
 
         }
-        
+
         public void ArchiveItems()
         {
-            foreach(TodoQuarter quarter in TodoQuarters.Values)
+            foreach (TodoQuarter quarter in TodoQuarters.Values)
             {
                 // List<TodoItem> list = quarter.GetItems();
                 quarter.GetItems().RemoveAll(item => item.IsDone);
             }
-            
+
         }
 
         private string GenerateHalfMatrix(QuarterType quaterType1, QuarterType quaterType2)
