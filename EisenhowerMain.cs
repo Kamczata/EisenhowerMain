@@ -6,9 +6,9 @@ namespace EisenhowerCore
     {  
         static public void Main(String[] args) 
         {
-            EisenhowerMatrix eisenhowerMatrix = new EisenhowerMatrix();
+            /*EisenhowerMatrix eisenhowerMatrix = new EisenhowerMatrix();
 
-            eisenhowerMatrix.MatrixLogic();
+            eisenhowerMatrix.MatrixLogic();*/
         }
     }
 }

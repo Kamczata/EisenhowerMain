@@ -10,12 +10,13 @@ namespace EisenhowerCore
     {
         public void Add(TodoItem item);
 
-        public void Mark(int id);
-
-        public void Unmark(int id);
+        public void MarkOrUnmark(int id, bool isDone);
 
         public TodoItem Get(int id);
 
         List<TodoItem> GetAll(int matrixId);
+
+        public void RemoveItem(int id);
+
     }
 }

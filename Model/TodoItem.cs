@@ -21,25 +21,6 @@ public class TodoItem
             IsDone = false;
         }
 
-        public string GetTitle()
-        {
-            return this.Title;
-        }
-
-        public DateTime GetDeadline()
-        {
-            return this.Deadline;
-        }
-
-        public void Mark()
-        {
-            IsDone = true;
-        }
-
-        public void UnMark()
-        {
-            IsDone = false;
-        }
 
         public override string ToString()
         {

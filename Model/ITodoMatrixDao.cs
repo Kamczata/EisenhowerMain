@@ -8,12 +8,12 @@ namespace EisenhowerCore
 {
     public interface ITodoMatrixDao
     {
-        public void Add();
+        public void Add(TodoMatrix matrix);
 
-        public void Update(int id);
+        public TodoMatrix Get(int id);
 
-        public TodoItem Get(int id);
+        List<TodoMatrix> GetAllTitles();
 
-        List<TodoItem> GetAllTitles();
+        public void ArchiveDoneItems(int matrixId);
     }
 }

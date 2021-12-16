@@ -14,14 +14,17 @@ namespace EisenhowerCore
 
         private Dictionary<QuarterType, TodoQuarter> TodoQuarters = new Dictionary<QuarterType, TodoQuarter>();
         private Display display = new Display();
+        public string Title;
+        public int Id;
 
-        public TodoMatrix()
+        public TodoMatrix(string title, int id)
         {
+            Title = title;
+            Id = id;
             TodoQuarters[QuarterType.IU] = new TodoQuarter();
             TodoQuarters[QuarterType.IN] = new TodoQuarter();
             TodoQuarters[QuarterType.NU] = new TodoQuarter();
-            TodoQuarters[QuarterType.NN] = new TodoQuarter();
-            //TodoQuarters[5] = new TodoQuarter();    
+            TodoQuarters[QuarterType.NN] = new TodoQuarter();   
         }
 
         public Dictionary<QuarterType, TodoQuarter> GetQuarters() => TodoQuarters;
@@ -32,24 +35,25 @@ namespace EisenhowerCore
         }
 
 
-        public void AddItem(int id, String title, DateTime deadline, bool isImportant, int matrixId)
+        public void placeItem(TodoItem item)
         {
-            bool isUrgent = IsUrgent(deadline);
+            bool isUrgent = IsUrgent(item.Deadline);
+            bool isImportant = item.IsImportant;
             if (isUrgent && isImportant)
             {
-                TodoQuarters[QuarterType.IU].AddItem(id, title, deadline, isImportant, matrixId);
+                TodoQuarters[QuarterType.IU].AddItem(item);
             }
             else if (isUrgent && !isImportant)
             {
-                TodoQuarters[QuarterType.NU].AddItem(id, title, deadline, isImportant, matrixId);
+                TodoQuarters[QuarterType.NU].AddItem(item);
             }
             else if (!isUrgent && isImportant)
             {
-                TodoQuarters[QuarterType.IN].AddItem(id, title, deadline, isImportant, matrixId);
+                TodoQuarters[QuarterType.IN].AddItem(item);
             }
             else if (!isUrgent && !isImportant)
             {
-                TodoQuarters[QuarterType.NN].AddItem(id, title, deadline, isImportant, matrixId);
+                TodoQuarters[QuarterType.NN].AddItem(item);
             }
         }
 
@@ -62,18 +66,6 @@ namespace EisenhowerCore
             }
 
             return true;
-        }
-
-       
-
-        public void ArchiveItems()
-        {
-            foreach (TodoQuarter quarter in TodoQuarters.Values)
-            {
-                // List<TodoItem> list = quarter.GetItems();
-                quarter.GetItems().RemoveAll(item => item.IsDone);
-            }
-
         }
 
         private string GenerateHalfMatrix(QuarterType quaterType1, QuarterType quaterType2)
