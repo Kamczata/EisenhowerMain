@@ -29,8 +29,8 @@ namespace EisenhowerCore
 
                 string insertTodoItemSql =
                     @"
-INSERT INTO item (title, deadline, is_important, matrix_id)
-VALUES (@Title, @Deadline, @IsImportant, @MatrixId);
+INSERT INTO item (title, deadline, is_important, matrix_id, is_done)
+VALUES (@Title, @Deadline, @IsImportant, @MatrixId, @IsDone);
 SELECT SCOPE_IDENTITY();
 ";
 
@@ -39,6 +39,7 @@ SELECT SCOPE_IDENTITY();
                 command.Parameters.AddWithValue("@Deadline", item.Deadline);
                 command.Parameters.AddWithValue("@IsImportant", Convert.ToByte(item.IsImportant));
                 command.Parameters.AddWithValue("@MatrixId", item.MatrixId);
+                command.Parameters.AddWithValue("@IsDone", item.IsDone);
 
 
                 int TodoItemitemId = Convert.ToInt32(command.ExecuteScalar());
@@ -62,9 +63,9 @@ SELECT SCOPE_IDENTITY();
                 command.CommandType = CommandType.Text;
 
                 string selectItemSql = @"
-                SELECT title, deadline, is_important, matrix_id
+                SELECT title, deadline, is_important, matrix_id, is_done
                 FROM item
-                WHWER id = @Id;
+                WHERE id = @Id;
 ";
                 command.Parameters.AddWithValue("@Id", id);
                 command.CommandText = selectItemSql;
@@ -78,8 +79,9 @@ SELECT SCOPE_IDENTITY();
                     DateTime deadline = Convert.ToDateTime(dataReader["deadline"]);
                     bool isImportnat = Convert.ToBoolean((byte)dataReader["is_important"]);
                     int matrixId = Convert.ToInt32(dataReader["matrix_id"]);
+                    bool isDone = (bool)dataReader["is_done"];
 
-                    newItem = new TodoItem(id, title, deadline, isImportnat, matrixId);
+                    newItem = new TodoItem(id, title, deadline, isImportnat, matrixId, isDone);
                 }
                 return newItem;
 
@@ -101,9 +103,9 @@ SELECT SCOPE_IDENTITY();
                 command.CommandType = CommandType.Text;
 
                 string selectAllItemsSql = @"
-                SELECT id, title, deadline, is_important, matrix_id
+                SELECT id, title, deadline, is_important, is_done
                 FROM item
-                WHWER matrix_id = @MatrixId;
+                WHERE matrix_id = @MatrixId;
 ";
                 command.Parameters.AddWithValue("@MatrixId", matrixId);
                 command.CommandText = selectAllItemsSql;
@@ -117,9 +119,10 @@ SELECT SCOPE_IDENTITY();
                     int id = Convert.ToInt32(dataReader["id"]);
                     string title = (string)dataReader["title"];
                     DateTime deadline = Convert.ToDateTime(dataReader["deadline"]);
-                    bool isImportnat = Convert.ToBoolean((byte)dataReader["is_important"]);
+                    bool isImportnat = (bool)dataReader["is_important"];
+                    bool isDone = (bool)dataReader["is_done"];
 
-                    newItem = new TodoItem(id, title, deadline, isImportnat, matrixId);
+                    newItem = new TodoItem(id, title, deadline, isImportnat, matrixId, isDone);
                     allItems.Add(newItem);
                 }
 

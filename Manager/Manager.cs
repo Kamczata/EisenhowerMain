@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,42 +11,56 @@ namespace EisenhowerCore
     public class Manager
     {
         private string ConnectionString => ConfigurationManager.AppSettings["connectionString"];
-        private Display _display;
-        private Input _input;
+        private TodoMatrixDao _matrixDao;
+        private TodoItemDao _itemDao;
+        private TodoMatrixManager matrixManager = new TodoMatrixManager();
+        private Display _display = new Display();
+
+        public readonly string Name = "MAIN MENU";
 
         public void Run()
         {
+            
             bool running = true;
 
             while (running)
             {
-                /*_ui.PrintTitle(GetName());
-                _ui.PrintOption('l', "Create new Matrix");
-                _ui.PrintOption('2', "Display saved Matrix");
 
-
-                switch (_ui.Choice("laeq"))
+                try
                 {
-                    case 'l':
-                        List();
+                    Setup();
+                }
+                catch (SqlException)
+                {
+                    Console.WriteLine("Could not connect to the database.");
+                }
+                _display.ClearScreen();
+                _display.PrintMenuName(Name);
+                _display.PrintOption("1", "Create new Matrix");
+                _display.PrintOption("2", "Display saved Matrix");
+                _display.PrintOption("3", "Quit");
+                _display.PrintMessage(_display.ChooseOption);
+                string userChoice = _display.UserInput();
+
+                switch (userChoice)
+                {
+                    case "1":
+                        matrixManager.CreateNewMatrix(_matrixDao, _itemDao);
                         break;
-                    case 'a':
-                        Add();
+                    case "2":
+                        matrixManager.DisplayAllMatrixes(_matrixDao, _itemDao);
                         break;
-                    case 'e':
-                        Edit();
+                    case "3":
+                        System.Environment.Exit(1);
                         break;
-                    case 'q':
-                        running = false;
-                        break;
-                }*/
+                }
             }
 
             void Setup()
             {
                 string connectionString = ConnectionString;
-                /*_authorDao = new AuthorDao(connectionString);
-                _bookDao = new BookDao(connectionString);*/
+                _matrixDao = new TodoMatrixDao(connectionString);
+                _itemDao = new TodoItemDao(connectionString);
             }
         }
     } 

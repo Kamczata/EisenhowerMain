@@ -72,37 +72,6 @@ namespace EisenhowerCore
             }
         }
         
-        // public QuarterType PickQuarterType()
-        // {
-        //     while (true)
-        //     {
-        //         string input = Console.ReadLine().ToUpper();
-        //         if (QuarterTypes.Contains(input))
-        //         {
-        //             QuarterType quarterType;
-        //             if (input == "IU")
-        //             {
-        //                 quarterType = QuarterType.IU;
-        //             }
-        //             else if (input == "NU")
-        //             {
-        //                 quarterType = QuarterType.NU;
-        //             }
-        //             else if (input == "IN")
-        //             {
-        //                 quarterType = QuarterType.IN;
-        //             }
-        //             else
-        //             {
-        //                 quarterType = QuarterType.NN;   
-        //             }
-        //
-        //             return quarterType;
-        //
-        //         }
-        //         display.DisplayInfoAboutWrongInput();
-        //     }
-        // }
         
         public string UserInput() => Console.ReadLine();
 

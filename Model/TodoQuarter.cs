@@ -22,9 +22,21 @@ namespace EisenhowerCore {
 
         public TodoItem GetItem(int index) => ToDoItems[index];
 
+        public List<TodoItem> GetItems() => ToDoItems;
 
         public int HowManyItems() => ToDoItems.Count();
-        
+
+        public bool HaveItemsToRemove() => GetItems().Any();
+
+        public override string ToString()
+        {
+            string s = "";
+            foreach(TodoItem item in ToDoItems)
+            {
+                s += item.ToString() + "\n";
+            }
+            return s;
+        }
 
     }
 

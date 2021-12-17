@@ -35,26 +35,30 @@ namespace EisenhowerCore
         }
 
 
-        public void placeItem(TodoItem item)
+        public void PlaceItems(List<TodoItem> items)
         {
-            bool isUrgent = IsUrgent(item.Deadline);
-            bool isImportant = item.IsImportant;
-            if (isUrgent && isImportant)
+            foreach(TodoItem item in items)
             {
-                TodoQuarters[QuarterType.IU].AddItem(item);
+                bool isUrgent = IsUrgent(item.Deadline);
+                bool isImportant = item.IsImportant;
+                if (isUrgent && isImportant)
+                {
+                    TodoQuarters[QuarterType.IU].AddItem(item);
+                }
+                else if (isUrgent && !isImportant)
+                {
+                    TodoQuarters[QuarterType.NU].AddItem(item);
+                }
+                else if (!isUrgent && isImportant)
+                {
+                    TodoQuarters[QuarterType.IN].AddItem(item);
+                }
+                else if (!isUrgent && !isImportant)
+                {
+                    TodoQuarters[QuarterType.NN].AddItem(item);
+                }
             }
-            else if (isUrgent && !isImportant)
-            {
-                TodoQuarters[QuarterType.NU].AddItem(item);
-            }
-            else if (!isUrgent && isImportant)
-            {
-                TodoQuarters[QuarterType.IN].AddItem(item);
-            }
-            else if (!isUrgent && !isImportant)
-            {
-                TodoQuarters[QuarterType.NN].AddItem(item);
-            }
+            
         }
 
         private bool IsUrgent(DateTime deadline)

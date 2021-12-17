@@ -18,7 +18,7 @@ namespace EisenhowerCore
             _connectionString = connectionString;
         }
 
-        public void Add(TodoMatrix matrix)
+        public TodoMatrix Add(string matrixName)
         {
             try
             {
@@ -35,10 +35,11 @@ SELECT SCOPE_IDENTITY();
 ";
 
                 command.CommandText = insertTodoMatrixSql;
-                command.Parameters.AddWithValue("@Title", matrix.Title);
+                command.Parameters.AddWithValue("@Title", matrixName);
 
-                int TodoMatrixId = Convert.ToInt32(command.ExecuteScalar());
-                matrix.Id = TodoMatrixId;
+                int todoMatrixId = Convert.ToInt32(command.ExecuteScalar());
+                TodoMatrix matrix = new TodoMatrix(matrixName, todoMatrixId);
+                return matrix;
             }
             catch (SqlException e)
             {

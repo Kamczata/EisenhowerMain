@@ -8,7 +8,7 @@ namespace EisenhowerCore
 {
     public interface ITodoMatrixDao
     {
-        public void Add(TodoMatrix matrix);
+        public TodoMatrix Add(string matrixName);
 
         public TodoMatrix Get(int id);
 

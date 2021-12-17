@@ -9,6 +9,9 @@ namespace EisenhowerCore
             /*EisenhowerMatrix eisenhowerMatrix = new EisenhowerMatrix();
 
             eisenhowerMatrix.MatrixLogic();*/
+
+            Manager manager = new Manager();
+            manager.Run();
         }
     }
 }
