@@ -45,7 +45,7 @@ namespace EisenhowerCore
 
         }
 
-        public void RemoveItem(TodoItemDao itemDao, TodoQuarter quarter)
+        private void RemoveItem(TodoItemDao itemDao, TodoQuarter quarter)
         {
             bool haveItemsToRemove = quarter.HaveItemsToRemove();
             if (haveItemsToRemove)
@@ -60,7 +60,7 @@ namespace EisenhowerCore
             }
         }
 
-        public int ItemPicker(TodoQuarter quarter)
+        private int ItemPicker(TodoQuarter quarter)
         {
             int howManyItems = quarter.HowManyItems();
             int itemIndex = 0;
@@ -74,7 +74,7 @@ namespace EisenhowerCore
             return itemIndex;
         }
 
-        public void MarkOrUnmark(bool shouldMark, TodoItemDao itemDao, TodoQuarter quarter)
+        private void MarkOrUnmark(bool shouldMark, TodoItemDao itemDao, TodoQuarter quarter)
         {
             int howManyItems = quarter.HowManyItems();
             int itemIndex = 0;

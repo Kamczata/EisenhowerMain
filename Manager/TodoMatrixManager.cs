@@ -58,7 +58,6 @@ namespace EisenhowerCore
             _display.PrintMatrixName(matrix);
             List<TodoItem> items = itemDao.GetAll(matrix.Id);
             matrix.PlaceItems(items);
-            //_display.DisplayMatrix(matrix);
             Run(matrixDao, itemDao, matrix);
 
         }

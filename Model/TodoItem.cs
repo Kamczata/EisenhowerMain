@@ -11,7 +11,7 @@ public class TodoItem
         public int MatrixId { get; set; }
 
 
-        public TodoItem(int id, string title, DateTime deadline, bool isImportant, int matrixId)
+        /*public TodoItem(int id, string title, DateTime deadline, bool isImportant, int matrixId)
         {
             Id = id;
             Title = title;
@@ -19,7 +19,7 @@ public class TodoItem
             this.IsImportant = isImportant;
             MatrixId = matrixId;
             IsDone = false;
-        }
+        }*/
 
         // when I create new item retrived from database
         public TodoItem(int id, string title, DateTime deadline, bool isImportant, int matrixId, bool isDone)

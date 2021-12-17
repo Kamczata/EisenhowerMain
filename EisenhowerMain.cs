@@ -6,9 +6,6 @@ namespace EisenhowerCore
     {  
         static public void Main(String[] args) 
         {
-            /*EisenhowerMatrix eisenhowerMatrix = new EisenhowerMatrix();
-
-            eisenhowerMatrix.MatrixLogic();*/
 
             Manager manager = new Manager();
             manager.Run();
