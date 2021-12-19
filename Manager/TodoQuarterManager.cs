@@ -71,6 +71,11 @@ namespace EisenhowerCore
                 itemIndex = Convert.ToInt32(userInput);
                 
             }
+            else if (howManyItems == 1)
+            {
+                
+                itemIndex = quarter.GetItems()[0].Id;
+            }
             return itemIndex;
         }
 
@@ -80,17 +85,17 @@ namespace EisenhowerCore
             int itemIndex = 0;
             bool mark = true;
             bool unmark = false;
-            if(shouldMark && howManyItems > 1)
+            if(shouldMark && howManyItems >= 1)
             {
                 int indexOfPickedItem = ItemPicker(quarter);
                 itemDao.MarkOrUnmark(indexOfPickedItem, mark);
             }
-            else if (!shouldMark && howManyItems > 1)
+            else if (!shouldMark && howManyItems >= 1)
             {
                 int indexOfPickedItem = ItemPicker(quarter);
                 itemDao.MarkOrUnmark(indexOfPickedItem, unmark);
             }
-            else
+            else 
             {
                 _display.PrintMessage(_display.noItemsToPick);
                 _display.PressAnyKey();
@@ -99,6 +104,9 @@ namespace EisenhowerCore
 
         private void Run(TodoItemDao itemDao, TodoMatrix matrix, TodoQuarter quarter)
         {
+            
+            _display.ClearScreen();
+            _display.DisplaQuarter(quarter, headers[quarter.Status]);
             _display.PrintOption("1", "Add item");
             _display.PrintOption("2", "Remove item");
             _display.PrintOption("3", "Mark item as done");
@@ -123,7 +131,10 @@ namespace EisenhowerCore
                     break;
                 case "5":
                     break;
-            }
+                
+        }    
+            
         }
+            
     }
 }

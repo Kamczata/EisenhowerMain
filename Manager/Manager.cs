@@ -33,12 +33,14 @@ namespace EisenhowerCore
                 catch (SqlException)
                 {
                     Console.WriteLine("Could not connect to the database.");
+                    _display.PressAnyKey();
+                    return;
                 }
                 _display.ClearScreen();
                 _display.PrintMenuName(Name);
                 _display.PrintOption("1", "Create new Matrix");
                 _display.PrintOption("2", "Display saved Matrix");
-                _display.PrintOption("3", "Quit");
+                _display.PrintOption("0", "Quit");
                 _display.PrintMessage(_display.ChooseOption);
                 string userChoice = _display.UserInput();
 
@@ -50,7 +52,7 @@ namespace EisenhowerCore
                     case "2":
                         matrixManager.DisplayAllMatrixes(_matrixDao, _itemDao);
                         break;
-                    case "3":
+                    case "0":
                         System.Environment.Exit(1);
                         break;
                 }

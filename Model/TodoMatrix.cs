@@ -21,10 +21,10 @@ namespace EisenhowerCore
         {
             Title = title;
             Id = id;
-            TodoQuarters[QuarterType.IU] = new TodoQuarter();
-            TodoQuarters[QuarterType.IN] = new TodoQuarter();
-            TodoQuarters[QuarterType.NU] = new TodoQuarter();
-            TodoQuarters[QuarterType.NN] = new TodoQuarter();   
+            TodoQuarters[QuarterType.IU] = new TodoQuarter(QuarterType.IU);
+            TodoQuarters[QuarterType.IN] = new TodoQuarter(QuarterType.IN);
+            TodoQuarters[QuarterType.NU] = new TodoQuarter(QuarterType.NU);
+            TodoQuarters[QuarterType.NN] = new TodoQuarter(QuarterType.NN);   
         }
 
         public Dictionary<QuarterType, TodoQuarter> GetQuarters() => TodoQuarters;
@@ -75,7 +75,7 @@ namespace EisenhowerCore
         private string GenerateHalfMatrix(QuarterType quaterType1, QuarterType quaterType2)
         {
             string halfMatrix = $"";
-            int quarterWidth = 40;
+            int quarterWidth = 45;
             int lines = 8;
             string wall = "|";
             string dash = "-";

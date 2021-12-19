@@ -21,7 +21,8 @@ namespace EisenhowerCore
             TodoMatrix newMatrix = matrixDao.Add(matrixName);
             _display.PrintMatrixName(newMatrix);
             _display.DisplayMatrix(newMatrix);
-            Run(matrixDao, itemDao, newMatrix);
+            int id = newMatrix.Id;
+            Run(matrixDao, itemDao, id);
 
         }
 
@@ -29,21 +30,24 @@ namespace EisenhowerCore
         {
             _display.ClearScreen();
             List <TodoMatrix> allMatrix = matrixDao.GetAllTitles();
+            List<int> matrixDatabaseIndexes = new List<int>();
             string backToMenuIndex = (allMatrix.Count() + 1).ToString();
             _display.PrintMenuName(_allMatrixMenuName);
             foreach(TodoMatrix matrix in allMatrix)
             {
                 _display.PrintMatrixTitleWithId(matrix);
+                matrixDatabaseIndexes.Add(matrix.Id);
             }
 
-            _display.PrintOption(backToMenuIndex, _display.Back);
+            _display.PrintOption("0", _display.Back);
             _display.PrintMessage(_display.ChooseOption);
             int userChoice = Convert.ToInt32(_display.UserInput());
-            var exists = allMatrix.ElementAtOrDefault(userChoice) != null;
+            //var exists = allMatrix.ElementAtOrDefault(userChoice) != null;
 
-            if (exists)
+            if (matrixDatabaseIndexes.Contains(userChoice))
             {
-                DisplayMatrix(allMatrix[userChoice-1], matrixDao, itemDao);
+                TodoMatrix choosenMatrix = matrixDao.Get(userChoice);
+                DisplayMatrix(choosenMatrix, matrixDao, itemDao);
             }
             else
             {
@@ -54,26 +58,32 @@ namespace EisenhowerCore
 
         private void DisplayMatrix(TodoMatrix matrix, TodoMatrixDao matrixDao, TodoItemDao itemDao)
         {
-            _display.ClearScreen();
-            _display.PrintMatrixName(matrix);
-            List<TodoItem> items = itemDao.GetAll(matrix.Id);
-            matrix.PlaceItems(items);
-            Run(matrixDao, itemDao, matrix);
+            //_display.ClearScreen();
+            //_display.PrintMatrixName(matrix);
+            int id = matrix.Id;
+            Run(matrixDao, itemDao, id);
 
         }
 
-        private void Run(TodoMatrixDao matrixDao, TodoItemDao itemDao, TodoMatrix matrix)
+        private void Run(TodoMatrixDao matrixDao, TodoItemDao itemDao, int matrixId)
         {
-
+            bool running = true;
+            while(running)
+            {
                 _display.ClearScreen();
+                TodoMatrix matrix = matrixDao.Get(matrixId);
+                List<TodoItem> items = itemDao.GetAll(matrix.Id);
+                matrix.PlaceItems(items);
+                _display.PrintMatrixName(matrix);
                 _display.DisplayMatrix(matrix);
+
                 _display.PrintOption("1", "Add item");
                 _display.PrintOption("2", "Archive done items");
                 _display.PrintOption("3", "Urgent & Important items");
                 _display.PrintOption("4", "Urgent & Not important items");
                 _display.PrintOption("5", "Not urgent & Important items");
                 _display.PrintOption("6", "Not urgent & Not important items");
-                _display.PrintOption("7", "Back");
+                _display.PrintOption("0", "Back");
 
                 _display.PrintMessage(_display.ChooseOption);
                 string userChoice = _display.UserInput();
@@ -104,10 +114,12 @@ namespace EisenhowerCore
                         _quarterManager.DisplayQuarter(QuarterType.NN, matrix.GetQuarter(QuarterType.NN), itemDao, matrix);
                         break;
 
-                    case "7":
+                    case "0":
+                        running = false;
                         break;
-                
+                }
             }
+                
 
            
         }

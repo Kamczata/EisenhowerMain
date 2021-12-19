@@ -7,12 +7,13 @@ namespace EisenhowerCore {
 
     public class TodoQuarter
     {
-        
+        public readonly QuarterType Status;
 
         private List<TodoItem> ToDoItems { get; }  = new List<TodoItem>();
 
-        public TodoQuarter()
+        public TodoQuarter(QuarterType quarterType)
         {
+            Status = quarterType;
         }
 
         public void AddItem(TodoItem item)

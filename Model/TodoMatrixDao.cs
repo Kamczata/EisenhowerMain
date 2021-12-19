@@ -58,9 +58,9 @@ SELECT SCOPE_IDENTITY();
 
                 string selectMatrixSql = @"
                 SELECT title
-                FROM matrix;
-                WHWER id = @Id;
-";
+                FROM matrix
+                WHERE id = @Id;";
+
                 command.Parameters.AddWithValue("@Id", id);
                 command.CommandText = selectMatrixSql;
 
