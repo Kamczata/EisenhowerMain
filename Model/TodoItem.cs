@@ -10,7 +10,6 @@ public class TodoItem
         public bool IsImportant { get; private set; }
         public int MatrixId { get; set; }
 
-
         /*public TodoItem(int id, string title, DateTime deadline, bool isImportant, int matrixId)
         {
             Id = id;
